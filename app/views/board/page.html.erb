@@ -1,0 +1,32 @@
+<center>
+  <h1>게시판</h1>
+</center>
+
+<div class="row">
+  <% unless @post.nil? %>
+    <div class="col-md-offset-2 col-md-8 well">
+      <%= render partial: "board/post", :locals => {:post => @post } %>
+    </div>
+  <% end %>
+  <div class="col-md-offset-2 col-md-8 well">
+    <table class="table table-condensed">
+      <thead>
+        <th>번호</th>
+        <th>작성자</th>
+        <th>제목</th>
+        <th>시간</th>
+      </thead>
+      <tbody>
+        <% @announcements.each do |post| %>
+          <%= render partial: "board/post_preview", :locals => { :post => post } %>
+        <% end %>
+        <% @page.each do |post| %>
+          <%= render partial: "board/post_preview", :locals => { :post => post } %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-offset-2 col-md-8" style="padding:0px">
+    <a href="/board/new" class="btn btn-default pull-right">Write</a>
+  </div>
+</div>
