@@ -1,6 +1,6 @@
 <%# Navbar on Top %>
 <% user = User.find_by_id(session[:user_id]) %> <%# nil if not found %>
-<% flash_class = flash[:success]? "bg-success text-success" : "bg-danger text-danger" %>
+<% flash_class = flash[:success_navbar]? "bg-success text-success" : "bg-danger text-danger" %>
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -37,9 +37,9 @@
           <button type="submit" class="btn btn-default">로그인</button>
         </form>
       <% end %>
-      <% if flash[:navbar].present? %>
+      <% if flash[:message_navbar].present? %>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" class="<%= flash_class %>" style="margin-top:5px;padding-top:10px;padding-bottom:10px;"><%= flash[:navbar] %></a></li>
+          <li><a href="#" class="<%= flash_class %>" style="margin-top:5px;padding-top:10px;padding-bottom:10px;"><%= flash[:message_navbar] %></a></li>
         </ul>
       <% end %>
     </div>

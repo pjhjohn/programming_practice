@@ -14,8 +14,8 @@ class ApplicationController < ActionController::Base
       if User.find_by_id(session[:user_id]).is_admin
         return true
       else
-        flash[:navbar] = "Admin is required"
-        flash[:success] = false
+        flash[:message_navbar] = "Admin is required"
+        flash[:success_navbar] = false
         redirect_to "/"
       end
     else
@@ -25,16 +25,16 @@ class ApplicationController < ActionController::Base
   
   def signin_required
     unless user_active?
-      flash[:navbar] = "Sign-in is required"
-      flash[:success] = false
+      flash[:message_navbar] = "Sign-in is required"
+      flash[:success_navbar] = false
       redirect_to "/" # flashing message that sign-in is required
     end
   end
   
   def signout_required
     if user_active?
-      flash[:navbar] = "Sign-out is required"
-      flash[:success] = false
+      flash[:message_navbar] = "Sign-out is required"
+      flash[:success_navbar] = false
       redirect_to "/" # flashing message that sign-in is required
     end
   end

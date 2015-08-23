@@ -6,11 +6,25 @@ class BoardController < ApplicationController
   def index
     params[:post_id] = nil
     params[:page_id]= 0
-    page
-    render :template => "board/page"
+    read
+    render :template => "board/read"
   end
   
   def new
+  end
+  
+  def edit
+    @post2edit = Post.find_by_id(params[:id])
+    if is_owner_of @post2edit
+      params[:user_id] = 0
+      params[:user_id] = @post2edit.user.id unless @post2edit.user.nil?
+    elsif params[:page_id].nil?
+      redirect_to "/board/read", alert: "이 게시물의 작성자가 아닙니다"
+    elsif params[:id].nil?
+      redirect_to "/board/read/#{params[:page_id]}", alert: "이 게시물의 작성자가 아닙니다"
+    else
+      redirect_to "/board/read/#{params[:page_id]}/#{params[:id]}", alert: "이 게시물의 작성자가 아닙니다"
+    end
   end
   
   def create
@@ -20,28 +34,13 @@ class BoardController < ApplicationController
     post2create.body = params[:body]
     post2create.is_announcement = User.find_by_id(session[:user_id]).is_admin unless User.find_by_id(session[:user_id]).nil?
     post2create.save
-    redirect_to "/board/page/0/#{post2create.id}"
+    redirect_to "/board/read/0/#{post2create.id}"
   end
-
-  # /board/page/:page_id/:post_id
-  def page
+  
+  def read
     load_post params[:post_id]
     load_page params[:page_id]
     load_announcement
-  end
-
-  def edit #has own vie
-    @post2edit = Post.find_by_id(params[:id])
-    if is_owner_of @post2edit
-      params[:user_id] = 0
-      params[:user_id] = @post2edit.user.id unless @post2edit.user.nil?
-    elsif params[:page_id].nil?
-      redirect_to "/board/page"
-    elsif params[:id].nil?
-      redirect_to "/board/page/#{params[:page_id]}"
-    else
-      redirect_to "/board/page/#{params[:page_id]}/#{params[:id]}"
-    end
   end
   
   def update
@@ -51,9 +50,13 @@ class BoardController < ApplicationController
         post2update.title = params[:title]
         post2update.body = params[:body]
         post2update.save
+        redirect_to "/board/read/#{params[:page_id]}/#{params[:id]}", notice: "글을 수정하였습니다"  
+      else
+        redirect_to "/board/read/#{params[:page_id]}/#{params[:id]}", alert: "이 게시물의 작성자가 아닙니다"
       end
+    else
+      redirect_to "/board/read/#{params[:page_id]}/#{params[:id]}", alert: "잘못된 접근입니다"
     end
-    redirect_to "/board/page/#{params[:page_id]}/#{params[:id]}"
   end
   
   #### Data Loading for Rendering Templates ########################

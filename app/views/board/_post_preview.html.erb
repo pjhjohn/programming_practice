@@ -3,12 +3,12 @@
 <% else %>
 <tr<%= ' class=info' if !params[:post_id].nil? and params[:post_id]==post.id.to_s %>>
 <% end %>
-  <td><%= post.is_announcement ? "공지" : post.id %></td>
+  <td style="text-align:center;"><%= post.is_announcement ? "공지" : post.id %></td>
   <td><%= post.user.username %></td>
   <% if params[:page_id].nil? %>
     <td><%= truncate post.title, length:60 %></td>
   <% else %>
-    <td><a href="/board/page<%= "/#{params[:page_id]}" %><%= "/#{post.id}" %>"><%= truncate post.title, length:60 %></a></td>
+    <td><a href="/board/read<%= "/#{params[:page_id]}" %><%= "/#{post.id}" %>"><%= truncate post.title, length:60 %></a></td>
   <% end %>
   <td><%= time_ago_in_words(post.created_at) %> ago</td>
 </tr>

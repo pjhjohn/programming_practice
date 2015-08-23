@@ -1,0 +1,15 @@
+<% unless flash[:alert].nil? %>
+  <div class="col-md-offset-<%= offset %> col-md-<%= size %> alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+<% unless flash[:notice].nil? %>
+  <div class="col-md-offset-<%= offset %> col-md-<%= size %> alert alert-info"><%= flash[:notice] %></div>
+<% end %>
+<% unless flash[:success].nil? %>
+  <div class="col-md-offset-<%= offset %> col-md-<%= size %> alert alert-success"><%= flash[:success] %></div>
+<% end %>
+<style>
+  .alert {
+    margin-bottom:-5px;
+    z-index:9999;
+  }
+</style>

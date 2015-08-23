@@ -21,16 +21,14 @@ class UserController < ApplicationController
         if User.where(username: params[:new_username]).take.nil?
           user.username = params[:new_username]
           user.save
-          flash[:change_username_success] = true
-          flash[:change_username_body] = "SUCCESS TO CHANGE USERNAME"
+          flash[:success] = "SUCCESS TO CHANGE USERNAME"
         else
-          flash[:change_username_success] = false
-          flash[:change_username_body] = "NEW USERNAME DUPLICATES TO ANOTHER'S"
+          flash[:alert] = "NEW USERNAME DUPLICATES TO ANOTHER'S"
         end
       else
-        flash[:change_username_success] = false
-        flash[:change_username_body] = "FAILED TO CHANGE USERNAME"
+        flash[:alert] = "FAILED TO CHANGE USERNAME"
       end
+      flash[:change_username] = true
       redirect_to "/user/info/#{session[:user_id]}"
     else
       redirect_to "/"
@@ -43,12 +41,11 @@ class UserController < ApplicationController
       if !user.nil? and user.password == encrypt(params[:old_password])
         user.password = encrypt(params[:new_password])
         user.save
-        flash[:change_password_success] = true
-        flash[:change_password_body] = "SUCCESS TO CHANGE PASSWORD"
+        flash[:success] = "SUCCESS TO CHANGE PASSWORD"
       else
-        flash[:change_password_success] = false
-        flash[:change_password_body] = "FAILED TO CHANGE PASSWORD"
+        flash[:alert] = "FAILED TO CHANGE PASSWORD"
       end
+      flash[:change_password] = true
       redirect_to "/user/info/#{session[:user_id]}"
     else
       redirect_to "/"

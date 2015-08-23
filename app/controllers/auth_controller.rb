@@ -11,11 +11,11 @@ class AuthController < ApplicationController
       new_user.username = params[:username]
       new_user.password = encrypt(params[:password])
       new_user.save
-      flash[:navbar] = "가입하였습니다"
-      flash[:success] = true
+      flash[:message_navbar] = "가입하였습니다"
+      flash[:success_navbar] = true
     else 
-      flash[:navbar] = "가입에 실패하였습니다"
-      flash[:success] = false
+      flash[:message_navbar] = "가입에 실패하였습니다"
+      flash[:success_navbar] = false
     end
     redirect_to "/"
   end
@@ -27,11 +27,11 @@ class AuthController < ApplicationController
     ).take
     unless user.nil?
       session[:user_id] = user.id
-      flash[:navbar] = "로그인 되었습니다"
-      flash[:success] = true
+      flash[:message_navbar] = "로그인 되었습니다"
+      flash[:success_navbar] = true
     else
-      flash[:navbar] = "로그인에 실패하였습니다"
-      flash[:success] = false
+      flash[:message_navbar] = "로그인에 실패하였습니다"
+      flash[:success_navbar] = false
     end
     redirect_to "/", alert: "Watch it, mister!"
   end

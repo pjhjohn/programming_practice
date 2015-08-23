@@ -1,16 +1,157 @@
-<div class="col-md-6">
-  <div class="col-md-12 well">
+<div class="col-md-5">
+  <div class="col-md-12 well main-sidebar">
     <center>
-      <a href="http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=2015&openShtmFg=U000200002&openDetaShtmFg=U000300001&sbjtCd=4190.103A&ltNo=002&sbjtSubhCd=000" target="_blank">
-        <h1>강의계획서</h1>
-      </a>
+      <h4>Course Materials</h4>
     </center>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=2015&openShtmFg=U000200002&openDetaShtmFg=U000300001&sbjtCd=4190.103A&ltNo=002&sbjtSubhCd=000" target="_blank">
+        Course Overview
+      </a></li>
+      <li><a href="#" style="text:none">교재 : A Book on C by Al Kelley, Ira Pohl-Addison Wealey-1998</a></li>
+    </ul>
+  </div>
+  <div class="col-md-12 well main-sidebar">
+    <center>
+      <h4>Announcements</h4>
+    </center>
+    <table class="table" style="margin-bottom:0px">
+      <thead>
+        <th style="text-align:center">날짜</th>
+        <th style="text-align:center">내용</th>
+      </thead>
+      <tbody>
+        <% @announcements.each do |post| %>
+          <%= render partial: "main/announcement", :locals => { :post => post } %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-12 well main-sidebar">
+    <center>
+      <h4>Schedules</h4>
+    </center>
+    <ul id="event-list" class="nav nav-pills nav-stacked">
+    </ul>
   </div>
 </div>
-<div class="col-md-6">
-  <div class="col-md-12 well">
-    <center>
-      <h1>공지사항</h1>
-    </center>
+<style>
+  .main-sidebar {
+    padding:0px;
+  }
+</style>
+
+<%# Calendar %>
+<link rel="stylesheet" href="calendar/css/calendar.css">
+<div class="col-md-7 well" style="padding:0px 0px 15px">
+  <center><h3 id="calendar-title" class="col-md-12" style="text-align:center"></h3></center>
+  <div class="col-md-12">
+    <div class="pull-left">
+      <div class="btn-group pull-lef">
+        <button class="btn btn-primary" data-calendar-nav="prev">&lt;&lt; Prev</button>
+        <button class="btn" data-calendar-nav="today">Today</button>
+        <button class="btn btn-primary" data-calendar-nav="next">Next &gt;&gt;</button>
+      </div>
+    </div>
+    <div class="pull-right form-inline">
+      <div class="btn-group">
+        <button class="btn btn-warning active" data-calendar-view="month">Month</button>
+        <button class="btn btn-warning" data-calendar-view="week">Week</button>
+        <button class="btn btn-warning" data-calendar-view="day">Day</button>
+      </div>
+    </div>
   </div>
+  <div class="col-md-12" style="margin-top:10px">
+    <div id="calendar" class="cal-context" style="width: 100%;"><div class="cal-row-fluid cal-row-head">
+  </div>
+  <%# Scripts for Calendar %>
+  <script type="text/javascript" src="/calendar/components/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="/calendar/components/bootstrap3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/calendar/js/calendar.js"></script>
+  <script type="text/javascript" src="/calendar/js/language/ko-KR.js"></script>
+  <script type="text/javascript">
+    var getDateInterval = function(start_ms, end_ms) {
+      if(start_ms==undefined||end_ms==undefined) return;
+      var start_date = new Date(start_ms);
+      var end_date = new Date(end_ms);
+      var start_str = "{0}-{1}-{2}".format(
+        start_date.getFullYear(),
+        (start_date.getMonth()<9?"0":"") + (start_date.getMonth()+1),
+        (start_date.getDate()<10?"0":"") + start_date.getDate()
+      );
+      if(start_date.getFullYear()==end_date.getFullYear()) {
+        if(start_date.getMonth()==end_date.getMonth()) {
+          if(start_date.getDate()==end_date.getDate()) return start_str
+          else return start_str + "~{0}".format(
+            (end_date.getDate()<10?"0":"") + end_date.getDate()
+          );
+        } else return start_str + "~{0}-{1}".format(
+          (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
+          (end_date.getDate()<10?"0":"") + end_date.getDate()
+        );
+      } else return start_str + "~{0}-{1}-{2}".format(
+        end_date.getFullYear(),
+        (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
+        (end_date.getDate()<10?"0":"") + end_date.getDate()
+      );
+    }
+    $(document).ready(function(){
+      var options = {
+        view: "month",
+        tmpl_path: "/calendar/tmpls/",
+        language: "ko-KR",
+        events_source: [
+          {
+            "id": 293,
+            "title": "수강신청 변경기간",
+            "url": "http://sugang.snu.ac.kr/",
+            "class": "event-important",
+            "start": 1441033200000,
+            "end": 1441616400000
+          },
+          {
+            "id": 293,
+            "title": "2학기 개강",
+            "url": "http://sugang.snu.ac.kr/",
+            "class": "event-important",
+            "start": 1441033200000,
+            "end": 1441119599999
+          }
+        ],
+        onAfterEventsLoad: function(events) {
+          console.log(events);
+          if(!events) return;
+          var list = $('#event-list');
+          list.html('');
+          $.each(events, function(key, val) {
+            $(document.createElement('li'))
+              .html('<a href="' + val.url + '">' + getDateInterval(val.start, val.end) + " : " + val.title + '</a>')
+              .appendTo(list);
+          });
+        },
+        onAfterViewLoad: function(view) {
+          $('#calendar-title').text(this.getTitle());
+          $('.btn-group button').removeClass('active');
+          $('button[data-calendar-view="' + view + '"]').addClass('active');
+        },
+        format12: true,
+        first_day: 2,
+        format12: false,
+        weekbox: false,
+        display_week_numbers: false
+      };
+      var calendar = $("#calendar").calendar(options);
+      $('.btn-group button[data-calendar-nav]').each(function() {
+        var $this = $(this);
+        $this.click(function() {
+          calendar.navigate($this.data('calendar-nav'));
+        });
+      });
+      $('.btn-group button[data-calendar-view]').each(function() {
+        var $this = $(this);
+        $this.click(function() {
+          calendar.view($this.data('calendar-view'));
+        });
+      });
+    });
+  </script>
 </div>

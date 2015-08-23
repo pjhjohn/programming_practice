@@ -1,20 +1,17 @@
-<center>
-  <h1>게시판</h1>
-</center>
-
 <div class="row">
+  <%= render :partial => "layouts/flash", :locals => {:offset => 2, :size => 8} %>
   <% unless @post.nil? %>
-    <div class="col-md-offset-2 col-md-8 well">
+    <div class="col-md-offset-2 col-md-8 well" style="padding:0px;margin-bottom:-5px;z-index:10">
       <%= render partial: "board/post", :locals => {:post => @post } %>
     </div>
   <% end %>
   <div class="col-md-offset-2 col-md-8 well">
     <table class="table table-condensed">
       <thead>
-        <th>번호</th>
-        <th>작성자</th>
-        <th>제목</th>
-        <th>시간</th>
+        <th style="text-align:center">번호</th>
+        <th style="text-align:center">작성자</th>
+        <th style="text-align:center">제목</th>
+        <th style="text-align:center">시간</th>
       </thead>
       <tbody>
         <% @announcements.each do |post| %>
@@ -25,8 +22,6 @@
         <% end %>
       </tbody>
     </table>
-  </div>
-  <div class="col-md-offset-2 col-md-8" style="padding:0px">
-    <a href="/board/new" class="btn btn-default pull-right">Write</a>
+    <a href="/board/new" class="btn btn-info pull-right" style="border-radius:0">Write</a>
   </div>
 </div>

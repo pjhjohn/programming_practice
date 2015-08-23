@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root :to => "main#index"
 
-  match "board/page(/:page_id(/:post_id))", :to => "board#page", :via => [:get, :post], :constraints => { :page_id => /\d/, :post_id => /\d/ }
-  match ":controller(/:action(/:id))", :via => [:get, :post], :constraints => { :id => /\d/ }
+  match "board/read(/:page_id(/:post_id))", :to => "board#read", :via => [:get, :post], :constraints => { :page_id => /\d+/, :post_id => /\d+/ }
+  match ":controller(/:action(/:id))", :via => [:get, :post], :constraints => { :id => /\d+/ }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
