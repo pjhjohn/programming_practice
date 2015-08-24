@@ -1,7 +1,7 @@
 <div class="row">
   <%= render :partial => "layouts/flash", :locals => {:offset => 2, :size => 8} %>
   <% unless @post.nil? %>
-    <div class="col-md-offset-2 col-md-8 well" style="padding:0px;margin-bottom:-5px;z-index:10">
+    <div class="col-md-offset-2 col-md-8 well" style="padding:0px;">
       <%= render partial: "board/post", :locals => {:post => @post } %>
     </div>
   <% end %>

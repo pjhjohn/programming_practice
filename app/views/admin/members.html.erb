@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-offset-2 col-md-8 well">
+    <div class="col-md-12 shadow" style="padding:0px;">
+      <center>
+        <h4>Member Info</h4>
+      </center>
+    </div>
+    <table class="table table-condensed">
+      <thead>
+        <th style="text-align:center">회원번호</th>
+        <th style="text-align:center">아이디</th>
+        <th style="text-align:center">가입일자</th>
+      </thead>
+      <tbody>
+        <% @page.each do |user| %>
+          <%= render partial: "admin/user_preview", :locals => { :user => user } %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

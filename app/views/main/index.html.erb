@@ -1,19 +1,40 @@
 <div class="col-md-5">
   <div class="col-md-12 well main-sidebar">
-    <center>
-      <h4>Course Materials</h4>
-    </center>
+    <div class="col-md-12 shadow" style="padding:0px;">
+      <center>
+        <h4>Course Information</h4>
+      </center>
+    </div>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=2015&openShtmFg=U000200002&openDetaShtmFg=U000300001&sbjtCd=4190.103A&ltNo=002&sbjtSubhCd=000" target="_blank">
-        Course Overview
+        <span style="color:black">Course Overview</span><br>
+        4190.103A 002 프로그래밍 연습
       </a></li>
-      <li><a href="#" style="text:none">교재 : A Book on C by Al Kelley, Ira Pohl-Addison Wealey-1998</a></li>
+      <li><a href="http://mrl.snu.ac.kr/~jehee/" target="_blank">
+        <span style="color:black">Professor</span><br>
+        JeHee Lee
+      </a></li>
+      <li><a href="#">
+        <span style="color:black">TextBook</span><br>
+        A Book on C by Al Kelley, Ira Pohl-Addison Wealey-1998
+      </a></li>
+      <li><a>
+        <span style="color:black">Lecture Hour (16:00~18:00)</span><br>
+        Tue : 302-208, Thu : 302-311-1
+      </a></li>
+      <li><a href="http://mrl.snu.ac.kr/" target="_blank" style="padding-bottom:0;color:black;">T/A</a></li>
+      <li><a href="http://mrl.snu.ac.kr/~pjhjohn/" target="_blank" style="padding-top:0;padding-bottom:0;">JoonHo Park</a></li>
+      <li><a href="http://mrl.snu.ac.kr/~shpark/" target="_blank" style="padding-top:0;padding-bottom:0;">SooHwan Park</a></li>
+      <li><a href="http://mrl.snu.ac.kr/~jspark/" target="_blank" style="padding-top:0;padding-bottom:0;">JungSu Park</a></li>
+      <li><a href="http://mrl.snu.ac.kr/~seiing/" target="_blank" style="padding-top:0;">SeHee Min</a></li>
     </ul>
   </div>
   <div class="col-md-12 well main-sidebar">
-    <center>
-      <h4>Announcements</h4>
-    </center>
+    <div class="col-md-12 shadow" style="padding:0px;">
+      <center>
+        <h4>Announcements</h4>
+      </center>
+    </div>
     <table class="table" style="margin-bottom:0px">
       <thead>
         <th style="text-align:center">날짜</th>
@@ -27,9 +48,11 @@
     </table>
   </div>
   <div class="col-md-12 well main-sidebar">
-    <center>
-      <h4>Schedules</h4>
-    </center>
+    <div class="col-md-12 shadow" style="padding:0px;">
+      <center>
+        <h4>Schedules</h4>
+      </center>
+    </div>
     <ul id="event-list" class="nav nav-pills nav-stacked">
     </ul>
   </div>
@@ -40,11 +63,13 @@
   }
 </style>
 
-<%# Calendar %>
+<%# Calendar - reference : https://github.com/Serhioromano/bootstrap-calendar%>
 <link rel="stylesheet" href="calendar/css/calendar.css">
 <div class="col-md-7 well" style="padding:0px 0px 15px">
-  <center><h3 id="calendar-title" class="col-md-12" style="text-align:center"></h3></center>
-  <div class="col-md-12">
+  <div class="col-md-12 shadow" style="padding:0px;margin-bottom:20px;">
+    <center><h3 id="calendar-title" class="col-md-12" style="text-align:center;"></h3></center>
+  </div>
+  <div class="col-md-12 clearfix"> 
     <div class="pull-left">
       <div class="btn-group pull-lef">
         <button class="btn btn-primary" data-calendar-nav="prev">&lt;&lt; Prev</button>
@@ -98,31 +123,14 @@
       var options = {
         view: "month",
         tmpl_path: "/calendar/tmpls/",
-        language: "ko-KR",
-        events_source: [
-          {
-            "id": 293,
-            "title": "수강신청 변경기간",
-            "url": "http://sugang.snu.ac.kr/",
-            "class": "event-important",
-            "start": 1441033200000,
-            "end": 1441616400000
-          },
-          {
-            "id": 293,
-            "title": "2학기 개강",
-            "url": "http://sugang.snu.ac.kr/",
-            "class": "event-important",
-            "start": 1441033200000,
-            "end": 1441119599999
-          }
-        ],
+        // language: "ko-KR",
+        events_source: "/schedule/get_events",
         onAfterEventsLoad: function(events) {
-          console.log(events);
           if(!events) return;
           var list = $('#event-list');
           list.html('');
           $.each(events, function(key, val) {
+            val.end -= 1; // exclude finish moment
             $(document.createElement('li'))
               .html('<a href="' + val.url + '">' + getDateInterval(val.start, val.end) + " : " + val.title + '</a>')
               .appendTo(list);

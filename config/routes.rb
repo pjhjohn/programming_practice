@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root :to => "main#index"
 
   match "board/read(/:page_id(/:post_id))", :to => "board#read", :via => [:get, :post], :constraints => { :page_id => /\d+/, :post_id => /\d+/ }
+  match "admin/members(/:page_id(/:user_id))", :to => "admin#members", :via => [:get, :post], :constraints => { :page_id => /\d+/, :user_id => /\d+/ }
   match ":controller(/:action(/:id))", :via => [:get, :post], :constraints => { :id => /\d+/ }
 
   # The priority is based upon order of creation: first created -> highest priority.
