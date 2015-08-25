@@ -1,4 +1,4 @@
-<div class="col-md-5">
+<div class="col-md-5" style="padding:0px 7.5px;">
   <div class="col-md-12 well main-sidebar">
     <div class="col-md-12 shadow" style="padding:0px;">
       <center>
@@ -65,101 +65,108 @@
 
 <%# Calendar - reference : https://github.com/Serhioromano/bootstrap-calendar%>
 <link rel="stylesheet" href="calendar/css/calendar.css">
-<div class="col-md-7 well" style="padding:0px 0px 15px">
-  <div class="col-md-12 shadow" style="padding:0px;margin-bottom:20px;">
-    <center><h3 id="calendar-title" class="col-md-12" style="text-align:center;"></h3></center>
-  </div>
-  <div class="col-md-12 clearfix"> 
-    <div class="pull-left">
-      <div class="btn-group pull-lef">
-        <button class="btn btn-primary" data-calendar-nav="prev">&lt;&lt; Prev</button>
-        <button class="btn" data-calendar-nav="today">Today</button>
-        <button class="btn btn-primary" data-calendar-nav="next">Next &gt;&gt;</button>
+<div class="col-md-7" style="padding:0px 7.5px;">
+  <div class="col-md-12 well" style="padding:0px 0px 15px 0px">
+    <div class="col-md-12 shadow" style="padding:0px;margin-bottom:20px;">
+      <center><h3 id="calendar-title" class="col-md-12" style="text-align:center;"></h3></center>
+    </div>
+    <div class="col-md-12 clearfix"> 
+      <div class="pull-left">
+        <div class="btn-group pull-lef">
+          <button class="btn btn-primary" data-calendar-nav="prev">&lt;&lt; Prev</button>
+          <button class="btn" data-calendar-nav="today">Today</button>
+          <button class="btn btn-primary" data-calendar-nav="next">Next &gt;&gt;</button>
+        </div>
+      </div>
+      <div class="pull-right form-inline">
+        <div class="btn-group">
+          <button class="btn btn-warning active" data-calendar-view="month">Month</button>
+          <button class="btn btn-warning" data-calendar-view="week">Week</button>
+          <button class="btn btn-warning" data-calendar-view="day">Day</button>
+        </div>
       </div>
     </div>
-    <div class="pull-right form-inline">
-      <div class="btn-group">
-        <button class="btn btn-warning active" data-calendar-view="month">Month</button>
-        <button class="btn btn-warning" data-calendar-view="week">Week</button>
-        <button class="btn btn-warning" data-calendar-view="day">Day</button>
-      </div>
+    <div class="col-md-12" style="margin-top:10px">
+      <div id="calendar" class="cal-context" style="width: 100%;"><div class="cal-row-fluid cal-row-head">
     </div>
-  </div>
-  <div class="col-md-12" style="margin-top:10px">
-    <div id="calendar" class="cal-context" style="width: 100%;"><div class="cal-row-fluid cal-row-head">
-  </div>
-  <%# Scripts for Calendar %>
-  <script type="text/javascript" src="/calendar/components/underscore/underscore-min.js"></script>
-  <script type="text/javascript" src="/calendar/components/bootstrap3/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/calendar/js/calendar.js"></script>
-  <script type="text/javascript" src="/calendar/js/language/ko-KR.js"></script>
-  <script type="text/javascript">
-    var getDateInterval = function(start_ms, end_ms) {
-      if(start_ms==undefined||end_ms==undefined) return;
-      var start_date = new Date(start_ms);
-      var end_date = new Date(end_ms);
-      var start_str = "{0}-{1}-{2}".format(
-        start_date.getFullYear(),
-        (start_date.getMonth()<9?"0":"") + (start_date.getMonth()+1),
-        (start_date.getDate()<10?"0":"") + start_date.getDate()
-      );
-      if(start_date.getFullYear()==end_date.getFullYear()) {
-        if(start_date.getMonth()==end_date.getMonth()) {
-          if(start_date.getDate()==end_date.getDate()) return start_str
-          else return start_str + "~{0}".format(
+    <%# Scripts for Calendar %>
+    <script type="text/javascript">
+      var getDateInterval = function(start_ms, end_ms) {
+        if(start_ms==undefined||end_ms==undefined) return;
+        var start_date = new Date(start_ms);
+        var end_date = new Date(end_ms);
+        var start_str = "{0}-{1}-{2}".format(
+          start_date.getFullYear(),
+          (start_date.getMonth()<9?"0":"") + (start_date.getMonth()+1),
+          (start_date.getDate()<10?"0":"") + start_date.getDate()
+        );
+        if(start_date.getFullYear()==end_date.getFullYear()) {
+          if(start_date.getMonth()==end_date.getMonth()) {
+            if(start_date.getDate()==end_date.getDate()) return start_str
+            else return start_str + "~{0}".format(
+              (end_date.getDate()<10?"0":"") + end_date.getDate()
+            );
+          } else return start_str + "~{0}-{1}".format(
+            (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
             (end_date.getDate()<10?"0":"") + end_date.getDate()
           );
-        } else return start_str + "~{0}-{1}".format(
+        } else return start_str + "~{0}-{1}-{2}".format(
+          end_date.getFullYear(),
           (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
           (end_date.getDate()<10?"0":"") + end_date.getDate()
         );
-      } else return start_str + "~{0}-{1}-{2}".format(
-        end_date.getFullYear(),
-        (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
-        (end_date.getDate()<10?"0":"") + end_date.getDate()
-      );
-    }
-    $(document).ready(function(){
-      var options = {
-        view: "month",
-        tmpl_path: "/calendar/tmpls/",
-        // language: "ko-KR",
-        events_source: "/schedule/get_events",
-        onAfterEventsLoad: function(events) {
-          if(!events) return;
-          var list = $('#event-list');
-          list.html('');
-          $.each(events, function(key, val) {
-            val.end -= 1; // exclude finish moment
-            $(document.createElement('li'))
-              .html('<a href="' + val.url + '">' + getDateInterval(val.start, val.end) + " : " + val.title + '</a>')
-              .appendTo(list);
+      }
+      $(document).ready(function(){
+        $.when(
+          $.getScript( "/calendar/components/underscore/underscore-min.js" ),
+          $.getScript( "/calendar/components/bootstrap3/js/bootstrap.min.js" ),
+          $.getScript( "/calendar/js/calendar.js" ),
+          $.getScript( "/calendar/js/language/ko-KR.js" ),
+          $.Deferred(function( deferred ){
+              $( deferred.resolve );
+          })
+        ).done(function(){
+          var options = {
+            view: "month",
+            tmpl_path: "/calendar/tmpls/",
+            language: "ko-KR",
+            events_source: "/schedule/get_events",
+            onAfterEventsLoad: function(events) {
+              if(!events) return;
+              var list = $('#event-list');
+              list.html('');
+              $.each(events, function(key, val) {
+                val.end -= 1; // exclude finish moment
+                $(document.createElement('li'))
+                  .html('<a href="' + val.url + '">' + getDateInterval(val.start, val.end) + " : " + val.title + '</a>')
+                  .appendTo(list);
+              });
+            },
+            onAfterViewLoad: function(view) {
+              $('#calendar-title').text(this.getTitle());
+              $('.btn-group button').removeClass('active');
+              $('button[data-calendar-view="' + view + '"]').addClass('active');
+            },
+            first_day: 2,
+            format12: false,
+            weekbox: false,
+            display_week_numbers: false
+          };
+          var calendar = $("#calendar").calendar(options);
+          $('.btn-group button[data-calendar-nav]').each(function() {
+            var $this = $(this);
+            $this.click(function() {
+              calendar.navigate($this.data('calendar-nav'));
+            });
           });
-        },
-        onAfterViewLoad: function(view) {
-          $('#calendar-title').text(this.getTitle());
-          $('.btn-group button').removeClass('active');
-          $('button[data-calendar-view="' + view + '"]').addClass('active');
-        },
-        format12: true,
-        first_day: 2,
-        format12: false,
-        weekbox: false,
-        display_week_numbers: false
-      };
-      var calendar = $("#calendar").calendar(options);
-      $('.btn-group button[data-calendar-nav]').each(function() {
-        var $this = $(this);
-        $this.click(function() {
-          calendar.navigate($this.data('calendar-nav'));
+          $('.btn-group button[data-calendar-view]').each(function() {
+            var $this = $(this);
+            $this.click(function() {
+              calendar.view($this.data('calendar-view'));
+            });
+          });
         });
       });
-      $('.btn-group button[data-calendar-view]').each(function() {
-        var $this = $(this);
-        $this.click(function() {
-          calendar.view($this.data('calendar-view'));
-        });
-      });
-    });
-  </script>
+    </script>
+  </div>
 </div>

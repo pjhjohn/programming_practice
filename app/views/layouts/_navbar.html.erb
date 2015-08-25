@@ -46,3 +46,12 @@
     </div>
   </div>
 </nav>
+<script>
+  $(document).ready(function(){
+    function setNavbarBrand() {
+      $(".navbar-brand").text($("#navbar").width()==720? "4190.103A" : "Programming Practice 2015");
+    }
+    setNavbarBrand();
+    $(window).resize(function() {setNavbarBrand()});
+  });
+</script>
