@@ -22,6 +22,9 @@
         <% end %>
       </tbody>
     </table>
+    <% (@end_page-@start_page+1).times do |i| %>
+      <a href="/board/read/<%=@start_page + i%>" class="btn btn-primary pull-left <%='disabled' if ((@start_page+i) == @pagenum)%>" style="border-radius:0;margin-left:3px;"><%=@start_page + i%></a>
+    <% end %>
     <a href="/board/new" class="btn btn-info pull-right" style="border-radius:0">Write</a>
   </div>
 </div>

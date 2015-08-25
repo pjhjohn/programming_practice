@@ -5,7 +5,7 @@ class BoardController < ApplicationController
   }
   def index
     params[:post_id] = nil
-    params[:page_id]= 0
+    params[:page_id] = 1
     read
     render :template => "board/read"
   end
@@ -38,6 +38,7 @@ class BoardController < ApplicationController
   end
   
   def read
+    params[:page_id] = 1 if params[:page_id].nil?
     load_post params[:post_id]
     load_page params[:page_id]
     load_announcement
@@ -66,17 +67,22 @@ class BoardController < ApplicationController
   end
   
   def load_page(pagenum = nil, posts_per_page = 10)
-    pagenum = 0 if pagenum.nil?
+    pagenum = 1 if pagenum.nil?
     pagenum = pagenum.to_i
-    @page = Post.where(is_announcement: false).limit(posts_per_page).offset(posts_per_page*pagenum).order(created_at: :desc)
+    @page = Post.limit(posts_per_page).offset(posts_per_page*(pagenum-1)).order(created_at: :desc)
+
+    # Calc Pages Number
+    total_page = Post.all.count / posts_per_page + 1
+    calc_page_num(pagenum, total_page)
+
     return @page.nil?? [] : @page
   end
-  
+
   def load_announcement(limit = 3)
     @announcements = Post.where(is_announcement: true).limit(limit).order(created_at: :desc)
     return @announcements.nil?? [] : @announcements
   end
-  
+
   def is_owner_of(post = nil)
     (!post.nil?) and (!post.user.nil?) and (session[:user_id]==post.user.id)
   end

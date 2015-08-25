@@ -1,2 +1,21 @@
-<h1>ADMIN PAGE</h1>
-<a href="/admin/members">show member info</a>
+<div class="row">
+  <% render :partial => "layouts/flash", :locals => {:offset => 2, :size => 8} %>
+  <div class="col-md-offset-2 col-md-8 well">
+    <center>
+      <a href="/admin/members"><h3 style="font-weight:bold;">Member Management</h3></a>
+      includes
+      <h4 style="font-weight:bold;">User Creation</h4>
+      <h4 style="font-weight:bold;">User Deletion</h4>
+      <h4 style="font-weight:bold;">User Modification</h4>
+    </center>
+  </div>
+  <div class="col-md-offset-2 col-md-8 well">
+    <center>
+      <a href="/admin/event"><h3 style="font-weight:bold;">Event Management</h3></a>
+      includes
+      <h4 style="font-weight:bold;">Register New Event</h4>
+      <h4 style="font-weight:bold;">Modify Event Details</h4>
+      <h4 style="font-weight:bold;">Assign Host of Event</h4>
+    </center>
+  </div>
+</div>

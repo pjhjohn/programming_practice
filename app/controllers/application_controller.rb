@@ -55,4 +55,13 @@ class ApplicationController < ActionController::Base
       redirect_to "/" # root_path
     end
   end
+
+  def calc_page_num( pagenum, total_page )
+    @start_page = 1 > ( pagenum - 2 ) ? 1 : ( pagenum - 2 )
+    @end_page = @start_page + 4
+    @end_page = total_page > @end_page ? @end_page : total_page
+    @start_page = @end_page - 4
+    @start_page = 1 > @start_page ? 1 : @start_page
+    @pagenum = pagenum
+  end
 end

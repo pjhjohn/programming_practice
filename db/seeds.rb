@@ -28,3 +28,8 @@ event = Event.new(title: "2학기 개강", klass: "event-important", start: date
 event.save
 event.url = "#{event.url}/#{event.id}"
 event.save
+
+
+(1..100).each do |i|
+  Post.new(user_id: 3, title: "Title##{i}", body: "Body##{i}").save
+end

@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
   root :to => "main#index"
 
+  # Board
   match "board/read(/:page_id(/:post_id))", :to => "board#read", :via => [:get, :post], :constraints => { :page_id => /\d+/, :post_id => /\d+/ }
+  
+  # Admin
+  match "admin", :to => "admin#index", :via => [:get]
   match "admin/members(/:page_id(/:user_id))", :to => "admin#members", :via => [:get, :post], :constraints => { :page_id => /\d+/, :user_id => /\d+/ }
+  match "admin(/:controller(/:action(/:id)))", :via => [:get, :post], :constraints => { :controller => "event" }
+
+  # Catches All
   match ":controller(/:action(/:id))", :via => [:get, :post], :constraints => { :id => /\d+/ }
 
   # The priority is based upon order of creation: first created -> highest priority.

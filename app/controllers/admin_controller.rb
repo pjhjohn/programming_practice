@@ -13,9 +13,14 @@ class AdminController < ApplicationController
 
   ## load member list ##
   def load_members(pagenum = nil, members_per_page = 20)
-    pagenum = 0 if pagenum.nil?
+    pagenum = 1 if pagenum.nil?
     pagenum = pagenum.to_i
-    @page = User.limit(members_per_page).offset(members_per_page*pagenum).order(id: :desc)
+    @page = User.limit(members_per_page).offset(members_per_page*(pagenum-1)).order(id: :desc)
+
+    # Calc Pages Number
+    total_page = User.all.count / members_per_page + 1
+    calc_page_num(pagenum, total_page)
+
     return @page.nil?? [] : @page
   end
 

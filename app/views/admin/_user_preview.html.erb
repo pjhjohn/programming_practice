@@ -1,5 +1,7 @@
 <tr>
   <td style="text-align:center;"><%= user.id %></td>
   <td style="text-align:center;"><%= user.username %></td>
+  <td style="text-align:center;"><%= Post.where(user_id: user.id).count %></td>
+  <td style="text-align:center;"><%= Reply.where(user_id: user.id).count %></td>
   <td style="text-align:center;"><%= user.created_at.to_s(:long) %></td>
 </tr>
