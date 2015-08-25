@@ -63,7 +63,7 @@ class UserController < ApplicationController
         flash[:alert] = "FAILED TO CHANGE EMAIL"
       end
       flash[:change_email] = true
-      redirect_to "/user/info/#{session[:user_email]}"
+      redirect_to "/user/info/#{session[:user_id]}"
     else
       redirect_to "/"
     end

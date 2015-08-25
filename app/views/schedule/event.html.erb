@@ -19,9 +19,10 @@
   </div>
 </div>
 
-<% unless @event.nil? %>
-  <div class="col-md-7" style="padding:0px 0px 15px">
-    <%= render :partial => "layouts/flash", :locals => {:offset => 0, :size => 12} %>
+
+<div class="col-md-7" style="padding:0px 0px 15px">
+  <%= render :partial => "layouts/flash", :locals => {:offset => 0, :size => 12} %>
+  <% unless @event.nil? %>
     <div class="col-md-12 well">
       <h5 style="text-align:right;margin:0">등록일 : <%= @event.created_at.strftime("%F") %></h5>
       <center><h3 class="col-md-12" style="font-weight:bold;text-align:center"><%= @event.title %></h3></center>
@@ -29,6 +30,15 @@
       <% unless @event.body.nil? %>
         <div class="col-md-12" style="border:1px solid white"><%=raw @event.body.gsub(/\n/, '<br/>') %></div>
       <% end %>
+      <% user = User.find_by_id(session[:user_id]) %>
+      <% if !user.nil? and user.is_admin %>
+        <a href="/admin/event/edit/<%= @event.id %>" class="pull-right btn btn-warning" style="margin-top:19px;">Edit</a>
+        <a href="/admin/event/remove/<%= @event.id %>" class="pull-right btn btn-danger" style="margin-top:19px;margin-right:19px;">Remove</a>
+      <% end %>
     </div>
-  </div>
-<% end %>
+  <% else %>
+    <div class="col-md-12 well" style="font-weight:bold;">
+      Schedule Overview
+    </div>
+  <% end %>
+</div>

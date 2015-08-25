@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # Admin
   match "admin", :to => "admin#index", :via => [:get]
   match "admin/members(/:page_id(/:user_id))", :to => "admin#members", :via => [:get, :post], :constraints => { :page_id => /\d+/, :user_id => /\d+/ }
-  match "admin(/:controller(/:action(/:id)))", :via => [:get, :post], :constraints => { :controller => "event" }
+  match "admin(/:controller(/:action(/:id)))", :via => [:get, :post], :constraints => { :controller => "event", :id => /\d+/ }
 
   # Catches All
   match ":controller(/:action(/:id))", :via => [:get, :post], :constraints => { :id => /\d+/ }
