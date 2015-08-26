@@ -90,7 +90,7 @@
         if(start_ms==undefined||end_ms==undefined) return;
         var start_date = new Date(start_ms);
         var end_date = new Date(end_ms);
-        var start_str = "{0}-{1}-{2}".format(
+        var start_str = "{0}.{1}.{2}".format(
           start_date.getFullYear(),
           (start_date.getMonth()<9?"0":"") + (start_date.getMonth()+1),
           (start_date.getDate()<10?"0":"") + start_date.getDate()
@@ -101,11 +101,11 @@
             else return start_str + "~{0}".format(
               (end_date.getDate()<10?"0":"") + end_date.getDate()
             );
-          } else return start_str + "~{0}-{1}".format(
+          } else return start_str + "~{0}.{1}".format(
             (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
             (end_date.getDate()<10?"0":"") + end_date.getDate()
           );
-        } else return start_str + "~{0}-{1}-{2}".format(
+        } else return start_str + "~{0}.{1}.{2}".format(
           end_date.getFullYear(),
           (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
           (end_date.getDate()<10?"0":"") + end_date.getDate()
@@ -132,9 +132,24 @@
               list.html('');
               $.each(events, function(key, val) {
                 val.end -= 1; // exclude finish moment
-                $(document.createElement('li'))
-                  .html('<a href="' + val.url + '">' + getDateInterval(val.start, val.end) + " : " + val.title + '</a>')
-                  .appendTo(list);
+                newElem = $(document.createElement('li'))
+                  .html(
+                    (
+                      '<a href="{0}" style="padding-top:9px;">' +
+                        '<div class="pull-left" style="padding-top:1px;">{1} :&nbsp;</div>' +
+                        '<div class="pull-left" style="padding-top:1px;">{2}</div>' +
+                        '<div style="clear:both;" />' +
+                      '</a>'
+                    ).format(
+                      val.url,
+                      getDateInterval(val.start, val.end),
+                      val.title
+                    )
+                  );
+                  if (val.class == "event-warning") {
+                    newElem.css("background-color", "#e9e9e9");
+                  }
+                  newElem.appendTo(list);
               });
             },
             onAfterViewLoad: function(view) {

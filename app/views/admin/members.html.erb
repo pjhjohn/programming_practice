@@ -12,9 +12,7 @@
         <th style="text-align:center">게시물 수</th>
         <th style="text-align:center">댓글 수</th></th>
         <th style="text-align:center">가입일자</th>
-        <th style="text-align:center">등급</th>
-        <th style="text-align:center">수정</th>
-        <th style="text-align:center">삭제</th>
+        <th style="text-align:center" style="max-width:300px;">관리</th>
       </thead>
       <tbody>
         <% @page.each do |user| %>
@@ -26,6 +24,7 @@
       <a href="/admin/members/<%=@start_page + i%>" class="btn btn-primary pull-left <%='disabled' if ((@start_page+i) == @pagenum)%>" style="border-radius:0;margin-left:3px;"><%=@start_page + i%></a>
     <% end %>
       <a href="/admin/user_create" class="btn btn-info pull-right" style="border-radius:0;margin-left:3px;">Create</a>
+      <div style="clear:both;"></div>
   </div>
 </div>
 

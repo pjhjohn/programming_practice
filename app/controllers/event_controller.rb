@@ -41,7 +41,7 @@ class EventController < ApplicationController
     event.save
     event.url = "#{event.url}/#{event.id}"
     event.save
-    redirect_to "/admin/event"
+    redirect_to "/schedule/event/#{event.id}", notice: "Successfully registered new event"
   end
 
   def update

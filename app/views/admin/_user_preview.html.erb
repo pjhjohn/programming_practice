@@ -5,16 +5,14 @@
   <td class="center-middle"><%= Reply.where(user_id: user.id).count %></td>
   <td class="center-middle"><%= user.created_at.strftime("%Y-%m-%d") %></td>
   <td class="center-middle">
-  <% if user.is_admin? %>
-    <button class="btn btn-success admin_user" style="width:74px;" user-id="<%=user.id%>" >Admin</button>
-  <% else %>
-    <button class="btn btn-default normal_user" style="width:74px;" user-id="<%=user.id%>" >Normal</button>
-  <% end %>
-    </td>
-  <td class="center-middle">
-    <button class="btn btn-warning user_modify_btn" user-id="<%=user.id%>">Modify</button>
-  </td>
-  <td class="center-middle">
-    <button class="btn btn-danger user_delete_btn" user-id="<%=user.id%>">Delete</button>
+    <div class="btn-group">
+    <% if user.is_admin? %>
+      <button class="btn btn-success admin_user" style="width:74px;" user-id="<%=user.id%>" >Admin</button>
+    <% else %>
+      <button class="btn btn-default normal_user" style="width:74px;" user-id="<%=user.id%>" >Normal</button>
+    <% end %>
+      <button class="btn btn-warning user_modify_btn" style="width:74px;" user-id="<%=user.id%>">Modify</button>
+      <button class="btn btn-danger user_delete_btn" style="width:74px;" user-id="<%=user.id%>">Delete</button>
+    </div>
   </td>
 </tr>

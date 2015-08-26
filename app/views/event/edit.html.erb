@@ -12,7 +12,7 @@
     <div class="form-group">
       <label class="col-md-2" for="body">Body</label>
       <div class="col-md-10">
-        <input type="text" name="body" class="form-control" placeholder="Body" value="<%= @event.body %>" required>
+        <textarea type="text" name="body" class="form-control" placeholder="Body" row="10" style="min-height:400px;" required><%= @event.body %></textarea>
       </div>
     </div>
     <%# Class %>
@@ -21,7 +21,7 @@
       <input type="hidden" name="klass" class="form-control" value="<%= @event.klass %>"required>
       <div class="col-md-10">
         <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-radius:2px;width:100%;" aria-haspopup="true" aria-expanded="false">
-          <span id="event-class">Select Event Class</span>&nbsp;&nbsp;<span class="caret"></span>
+          <span id="event-class"><%= @event.klass[6..@event.klass.length] %></span>&nbsp;&nbsp;<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" style="left:200px; min-width:200px">
           <li><a href="#">IMPORTANT</a></li>
