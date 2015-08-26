@@ -1,11 +1,11 @@
 <div class="row">
   <%= render :partial => "layouts/flash", :locals => {:offset => 2, :size => 8} %>
   <% unless @post.nil? %>
-    <div class="col-md-offset-2 col-md-8 well" style="padding:0px;">
+    <div class="col-md-offset-2 col-md-8 col-xs-12 well" style="padding:0px;">
       <%= render partial: "board/post", :locals => {:post => @post } %>
     </div>
   <% end %>
-  <div class="col-md-offset-2 col-md-8 well">
+  <div class="col-md-offset-2 col-md-8 col-xs-12 well">
     <table class="table table-condensed">
       <thead>
         <th style="text-align:center">번호</th>
@@ -26,5 +26,6 @@
       <a href="/board/read/<%=@start_page + i%>" class="btn btn-primary pull-left <%='disabled' if ((@start_page+i) == @pagenum)%>" style="border-radius:0;margin-left:3px;"><%=@start_page + i%></a>
     <% end %>
     <a href="/board/new" class="btn btn-info pull-right" style="border-radius:0">Write</a>
+    <div style="clear:both;"></div>
   </div>
 </div>

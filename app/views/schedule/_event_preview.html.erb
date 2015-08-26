@@ -1,6 +1,6 @@
 <% start_str = event.start.strftime("%F").gsub(/\-/,'.') %>
 <% finish_str = event.finish.strftime("%F").gsub(/\-/,'.') %>
-<tr<%= ' class=info' if !params[:id].nil? and params[:id]==event.id.to_s %>>
-  <td style="text-align:center;"><%= (start_str==finish_str)? start_str : (start_str+"~"+finish_str) %></td>
-  <td style="text-align:center;"><a href="/schedule/event/<%= event.id %>"><%= truncate event.title, length:60 %></a></td>
+<tr class="schedule_table_row <%= 'info' if !params[:id].nil? and params[:id]==event.id.to_s %>">
+  <td style="text-align:center;"><%= (start_str==finish_str)? start_str : (start_str+"\n~"+finish_str) %></td>
+  <td style="text-align:left;"><a href="/schedule/event/<%= event.id %>"><%= truncate event.title, length:60 %></a></td>
 </tr>

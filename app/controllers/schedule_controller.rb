@@ -11,7 +11,7 @@ class ScheduleController < ApplicationController
 
   # show event, returning rendered view
   def event
-    @events = Event.all.order(created_at: :desc)
+    @events = Event.all.order(start: :asc)
     @event = Event.find_by_id(params[:id])
   end
 

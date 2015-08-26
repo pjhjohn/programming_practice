@@ -1,20 +1,23 @@
-<div class="col-md-12 post">
+<div class="col-xs-12 post">
   <% unless post.user.nil? %>
-    <div class="col-md-5" style="font-weight:bold;"><%= post.user.username %></div>
+    <div class="col-xs-5" style="font-weight:bold;"><%= post.user.username %></div>
   <% end %>
   <%# Timestamp & Actions %>
-  <div class="col-md-7" style="text-align:right;">
+  <div class="col-xs-7" style="text-align:right;">
     <%= time_ago_in_words(post.created_at) %> ago
     <a href="/board/edit/<%= post.id %>?page_id=<%=params[:page_id]%>"><span class="glyphicon glyphicon-pencil"/></a>
   </div>
   
   <%# Body %>
-  <div class="col-md-12 post-body"><%=raw post.body.gsub(/\n/, '<br/>') %></div>
+  <div class="col-xs-12 post-body"><%=raw post.body.gsub(/\n/, '<br/>') %></div>
   
   <%# Reply %>
-  <form action="/reply/create/<%= post.id %>" class="col-md-12">
-    <input name="body" class="col-md-10" type="text" placeholder="댓글">
-    <input class="col-md-2" type="submit" value="등록">
+  <form action="/reply/create/<%= post.id %>" class="col-xs-12">
+    <div class="form-group col-xs-10" style="padding-left:0px;margin:0px;">
+      <label class="sr-only" for="body">Reply</label>
+      <input type="text" name="body" class="form-control" placeholder="댓글">
+    </div>
+    <button type="submit" class="btn btn-default col-xs-2">등록</button>
   </form>
   <% post.replies.each do |reply| %>
     <%= render partial: "board/reply", :locals => {:reply => reply} %>

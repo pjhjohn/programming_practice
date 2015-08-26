@@ -1,26 +1,28 @@
-<div class="col-md-5">
-  <div class="col-md-12 well" style="padding:0px;">
-    <div class="col-md-12 shadow" style="padding:0px;">
+<div class="col-md-5" style="padding:0px 7.5px;">
+  <div class="col-md-12 well" style="padding:0px 0px 10px 0px;">
+    <div class="col-md-12 shadow">
       <center>
         <h4>Schedules</h4>
       </center>
     </div>
-    <table class="table" style="margin-bottom:0px">
-      <thead>
-        <th style="text-align:center">날짜</th>
-        <th style="text-align:center">내용</th>
-      </thead>
-      <tbody>
-        <% @events.each do |event| %>
-          <%= render partial: "schedule/event_preview", :locals => { :event => event } %>
-        <% end %>
-      </tbody>
-    </table>
+    <div class="col-md-12">
+      <table class="table" style="margin-bottom:0px">
+        <thead>
+          <th style="text-align:center">날짜</th>
+          <th style="text-align:center">내용</th>
+        </thead>
+        <tbody>
+          <% @events.each do |event| %>
+            <%= render partial: "schedule/event_preview", :locals => { :event => event } %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
 
-<div class="col-md-7" style="padding:0px 0px 15px">
+<div class="col-md-7" style="padding:0px 7.5px 15px 7.5px">
   <%= render :partial => "layouts/flash", :locals => {:offset => 0, :size => 12} %>
   <% unless @event.nil? %>
     <div class="col-md-12 well">
