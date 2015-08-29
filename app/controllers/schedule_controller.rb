@@ -29,7 +29,7 @@ class ScheduleController < ApplicationController
           :class => event.klass,
           :start => event.start.to_datetime.strftime('%Q').to_i,
           :end   => event.finish.to_datetime.strftime('%Q').to_i
-        })
+        }) if DateTime.now < event.finish
       end
       event_response[:success] = 1
     rescue Exception

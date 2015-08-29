@@ -27,6 +27,9 @@ class BoardController < ApplicationController
     end
   end
   
+  def remove
+  end
+  
   def create
     post2create = Post.new
     post2create.user_id = session[:user_id]
@@ -58,6 +61,9 @@ class BoardController < ApplicationController
     else
       redirect_to "/board/read/#{params[:page_id]}/#{params[:id]}", alert: "잘못된 접근입니다"
     end
+  end
+  
+  def delete
   end
   
   #### Data Loading for Rendering Templates ########################
