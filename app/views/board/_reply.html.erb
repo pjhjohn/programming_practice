@@ -1,8 +1,9 @@
-<div style="margin:5px 0px;"class="col-xs-12">
-  <div class="col-xs-2" style="font-weight:bold;"><%= reply.user.username %></div>
-  <div class="col-xs-10" style="word-break:break-all;"><%= reply.body %>
-    <% if reply.user.id == session[:user_id] %> 
-      <a href="/reply/delete/<%=reply.id%>"><div class="delete_reply">X</div></a>
+<div class="col-xs-12" style="padding:0px;">
+  <span style="font-weight:bold;"><%= reply.user.username %>  :  </span>
+  <span style="word-break:break-all;">
+    <%= reply.body %>
+    <% if !reply.user.nil? and reply.user.id == session[:user_id] or reply.user.is_admin? %>
+      <a href="/reply/delete/<%=reply.id%>"><span class="glyphicon glyphicon-remove" style="color:rgb(150,150,150);position:absolute;right:0px;"></span></a>
     <% end %>
-  </div>
+  </span>
 </div>

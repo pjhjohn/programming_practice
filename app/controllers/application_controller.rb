@@ -40,8 +40,7 @@ class ApplicationController < ActionController::Base
   end
   
   def user_active?
-    return true unless session[:user_id].nil? or User.find_by_id(session[:user_id]).nil?
-    false
+    !session[:user_id].nil? and !User.find_by_id(session[:user_id]).nil?
   end
   
   def set_navbar_category(category = "")
@@ -63,5 +62,10 @@ class ApplicationController < ActionController::Base
     @start_page = @end_page - 4
     @start_page = 1 > @start_page ? 1 : @start_page
     @pagenum = pagenum
+  end
+  
+  def user_admin?
+    user = User.find_by_id(session[:user_id])
+    !user.nil? and user.is_admin
   end
 end

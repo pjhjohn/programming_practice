@@ -15,7 +15,7 @@ class BoardController < ApplicationController
   
   def edit
     @post2edit = Post.find_by_id(params[:id])
-    if is_owner_of @post2edit
+    if is_owner_of @post2edit or user_admin?
       params[:user_id] = 0
       params[:user_id] = @post2edit.user.id unless @post2edit.user.nil?
     elsif params[:page_id].nil?
@@ -50,7 +50,7 @@ class BoardController < ApplicationController
   def update
     unless params[:id].nil?
       post2update = Post.find_by_id(params[:id])
-      if is_owner_of post2update
+      if is_owner_of post2update or user_admin?
         post2update.title = params[:title]
         post2update.body = params[:body]
         post2update.save

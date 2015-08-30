@@ -1,39 +1,31 @@
-<div class="col-xs-12 post">
+<div class="col-md-offset-2 col-md-8 well" style="margin-bottom:0px;">
   <% unless post.user.nil? %>
-    <div class="col-xs-5" style="font-weight:bold;"><%= post.user.username %></div>
-  <% end %>
-  <%# Timestamp & Actions %>
-  <div class="col-xs-7" style="text-align:right;">
-    <%= time_ago_in_words(post.created_at) %> ago
-    <a href="/board/edit/<%= post.id %>?page_id=<%=params[:page_id]%>"><span class="glyphicon glyphicon-pencil"/></a>
-  </div>
-  
-  <%# Body %>
-  <div class="col-xs-12 post-body"><%=raw post.body.gsub(/\n/, '<br/>') %></div>
-  
-  <%# Reply %>
-  <form action="/reply/create/<%= post.id %>" class="col-xs-12">
-    <div class="form-group col-xs-10" style="padding-left:0px;margin:0px;">
-      <label class="sr-only" for="body">Reply</label>
-      <input type="text" name="body" class="form-control" placeholder="댓글">
-    </div>
-    <button type="submit" class="btn btn-default col-xs-2">등록</button>
-  </form>
-  <% post.replies.each do |reply| %>
-    <%= render partial: "board/reply", :locals => {:reply => reply} %>
+    <div class="col-md-6" style="padding:0px;text-align:left;font-weight:bold;"><%= post.user.username %></div>
+    <div class="col-md-6" style="padding:0px;text-align:right;">작성일 : <%= post.created_at.strftime("%F %H:%M").gsub(/\-/,'.') %></div>
   <% end %>
 </div>
-<style>
-  .post {
-    padding : 15px 5px;
-  }
-  .post > div > a > span {
-    padding : 5px;
-    border : 1px solid rgb(150,150,150);
-    border-radius : 2px;
-    color : black;
-  }
-  .post-body {
-    margin : 15px 0px;
-  }
-</style>
+<div class="col-md-offset-2 col-md-8 well" style="margin-bottom:0px;">
+  <div class="col-md-12" style="padding:0px;"><%=raw post.body.gsub(/\n/, '<br/>') %></div>
+  <% user = User.find_by_id(session[:user_id]) %>
+  <% if !user.nil? and (user.is_admin or user.id==post.user_id) %>
+    <a href="/board/edit/<%= post.id %>?page_id=<%= params[:page_id] %>" class="pull-right btn btn-warning" style="margin-top:19px;">Edit</a>
+    <a href="/board/remove/<%= post.id %>" class="pull-right btn btn-danger" style="margin-top:19px;margin-right:19px;">Remove</a>
+    <div style="clear:both"></div>
+  <% end %>
+  <div style="clear:both;"></div>
+</div>
+<form action="/reply/create/<%= post.id %>" class="col-md-offset-2 col-md-8 well" style="padding:0px;margin-bottom:0px;" method="POST">
+  <div class="form-group col-xs-10" style="padding:0px;margin:0px;border:none;height:32px;">
+    <input type="text" name="body" class="form-control" style="border-radius:0px;border:none;" placeholder="댓글">
+  </div>
+  <button type="submit" class="btn btn-primary col-xs-2" style="border:none;">등록</button>
+  <div style="clear:both;"></div>
+</form>
+<% unless post.replies.empty? %>
+  <div class="col-md-offset-2 col-md-8 well" style="padding:15px;">
+    <% post.replies.each do |reply| %>
+      <%= render partial: "board/reply", :locals => {:reply => reply} %>
+    <% end %>
+    <div style="clear:both;"></div>
+  </div>
+<% end %>
