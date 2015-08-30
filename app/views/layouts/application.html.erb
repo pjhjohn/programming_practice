@@ -12,18 +12,27 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-
 <%# navbar %>
 <%= render partial: "layouts/navbar" %>
 
 <%# body %>
-<body style="background-color:rgb(150, 150, 150);font-family:'Nanum Gothic', sans-serif;">
+<body style="background-color:rgb(70,70,70);font-family:'Nanum Gothic', sans-serif;">
   <div class="container" style="padding-top:70px;">
     <%= yield %>
   </div>
 </body>
 </html>
 <style>
+  h1, h2, h3, h4, h5, h6, div, li, span, a>span, td, .navbar-default .navbar-nav>li>a {
+    color:rgb(70,70,70);
+  }
+  a>h1, a>h2, a>h3, a>h4, a>h5, a>h6 {
+    color:rgb(100,150,250);
+  }
+  .navbar-default .navbar-brand {
+    color:rgb(70,70,70);
+    font-weight:bold;
+  }
   .well, .alert {
     border-radius:0px;
     border: 1px solid rgba(100, 100, 100, .4);
@@ -52,7 +61,6 @@
   .schedule_table_row:hover  {
     background-color:#eee !important;
   }
-  
   .delete_reply{
     cursor:pointer;
     position:absolute;

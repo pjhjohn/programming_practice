@@ -2,7 +2,7 @@
   <%= render :partial => "layouts/flash", :locals => {:offset => 2, :size => 8} %>
   <div class="col-md-offset-2 col-md-8 well">
     <center>
-      <h3 style="font-weight:bold;color:rgb(150,150,150);">Are you sure to Delete Event#<%= @event.id %></h3>
+      <h3 style="font-weight:bold;">Are you sure to Delete Event#<%= @event.id %></h3>
     </center>
     <div class="col-md-12" style="padding:10px;"></div>
     <form class="col-md-offset-3 col-md-3 form-horizontal" action="/schedule/event/<%= @event.id %>" method="POST">
