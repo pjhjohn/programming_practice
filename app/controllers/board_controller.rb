@@ -1,5 +1,5 @@
 class BoardController < ApplicationController
-  before_filter :signin_required
+  before_filter :signin_required, except: [:index, :read]
   before_action -> {
     set_navbar_category "board"
   }

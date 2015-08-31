@@ -1,10 +1,10 @@
-<div class="col-md-offset-2 col-md-8 well" style="margin-bottom:0px;">
+<div class="col-md-offset-2 col-md-8 well">
   <% unless post.user.nil? %>
     <div class="col-md-6" style="padding:0px;text-align:left;font-weight:bold;"><%= post.user.username %></div>
     <div class="col-md-6" style="padding:0px;text-align:right;">작성일 : <%= post.created_at.strftime("%F %H:%M").gsub(/\-/,'.') %></div>
   <% end %>
 </div>
-<div class="col-md-offset-2 col-md-8 well" style="margin-bottom:0px;">
+<div class="col-md-offset-2 col-md-8 well" style="margin-top:-20px;">
   <div class="col-md-12" style="padding:0px;"><%=raw post.body.gsub(/\n/, '<br/>') %></div>
   <% user = User.find_by_id(session[:user_id]) %>
   <% if !user.nil? and (user.is_admin or user.id==post.user_id) %>
@@ -14,18 +14,20 @@
   <% end %>
   <div style="clear:both;"></div>
 </div>
-<form action="/reply/create/<%= post.id %>" class="col-md-offset-2 col-md-8 well" style="padding:0px;margin-bottom:0px;" method="POST">
-  <div class="form-group col-xs-10" style="padding:0px;margin:0px;border:none;height:32px;">
-    <input type="text" name="body" class="form-control" style="border-radius:0px;border:none;" placeholder="댓글">
-  </div>
-  <button type="submit" class="btn btn-primary col-xs-2" style="border:none;">등록</button>
-  <div style="clear:both;"></div>
-</form>
-<% unless post.replies.empty? %>
-  <div class="col-md-offset-2 col-md-8 well" style="padding:15px;">
-    <% post.replies.each do |reply| %>
-      <%= render partial: "board/reply", :locals => {:reply => reply} %>
-    <% end %>
+<% unless session[:user_id].nil? %>
+  <form action="/reply/create/<%= post.id %>" class="col-md-offset-2 col-md-8 well" style="padding:0px;margin-top:-20px;" method="POST">
+    <div class="form-group col-xs-10" style="padding:0px;margin:0px;border:none;height:32px;">
+      <input type="text" name="body" class="form-control" style="border-radius:0px;border:none;" placeholder="댓글">
+    </div>
+    <button type="submit" class="btn btn-primary col-xs-2" style="border:none;">등록</button>
     <div style="clear:both;"></div>
-  </div>
+  </form>
+  <% unless post.replies.empty? %>
+    <div class="col-md-offset-2 col-md-8 well" style="padding:15px;margin-top:-20px;">
+      <% post.replies.each do |reply| %>
+        <%= render partial: "board/reply", :locals => {:reply => reply} %>
+      <% end %>
+      <div style="clear:both;"></div>
+    </div>
+  <% end %>
 <% end %>

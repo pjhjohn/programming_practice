@@ -1,5 +1,4 @@
 class ScheduleController < ApplicationController
-  before_filter :signin_required, only: [:index, :event]
   before_action -> {
     set_navbar_category "schedule"
   }
