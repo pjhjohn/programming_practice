@@ -9,7 +9,7 @@
   <% user = User.find_by_id(session[:user_id]) %>
   <% if !user.nil? and (user.is_admin or user.id==post.user_id) %>
     <a href="/board/edit/<%= post.id %>?page_id=<%= params[:page_id] %>" class="pull-right btn btn-warning" style="margin-top:19px;">Edit</a>
-    <a href="/board/remove/<%= post.id %>" class="pull-right btn btn-danger" style="margin-top:19px;margin-right:19px;">Remove</a>
+    <a href="/board/remove/<%= post.id %>?page_id=<%= params[:page_id] %>" class="pull-right btn btn-danger" style="margin-top:19px;margin-right:19px;">Remove</a>
     <div style="clear:both"></div>
   <% end %>
   <div style="clear:both;"></div>

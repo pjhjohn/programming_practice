@@ -1,6 +1,6 @@
 <% if post.is_announcement %>
   <tr class="danger">
     <td style="text-align:center;"><%= post.created_at.strftime("%F") %></td>
-    <td style="text-align:center;"><a href="/board/read/0/<%= post.id %>"><%= truncate post.title, length:40 %></a></td>
+    <td style="text-align:center;"><a href="/board/read/0/<%= post.id %>"><%= truncate post.title, length:26 %></a></td>
   </tr>
 <% end %>

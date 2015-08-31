@@ -28,6 +28,13 @@ class BoardController < ApplicationController
   end
   
   def remove
+    if params[:id].nil?
+      redirect_to :back
+    elsif Post.find_by_id(params[:id]).nil?
+      redirect_to :back
+    else
+      @post = Post.find_by_id(params[:id])
+    end
   end
   
   def create
@@ -64,6 +71,19 @@ class BoardController < ApplicationController
   end
   
   def delete
+    if params[:id].present?
+      post2delete = Post.find_by_id(params[:id])
+      if is_owner_of post2delete or user_admin?
+        post2delete.destroy
+        redirect_to "/board", notice: "Successfully deleted"
+      elsif post2delete.nil?
+        redirect_to "/board", alert: "No such post exists"
+      else
+        redirect_to "/board/read/#{params[:page_id]}/#{post2delete.id}", alert: "Not Authorized"
+      end
+    else
+      redirect_to "/board", alert: "Failed to delete post : No such ID exists"
+    end
   end
   
   #### Data Loading for Rendering Templates ########################
