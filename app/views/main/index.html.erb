@@ -136,7 +136,11 @@
               if(!events) return;
               var list = $('#event-list');
               list.html('');
+              var now = new Date().getTime();
               $.each(events, function(key, val) {
+                var start = new Date(val.start).getTime();
+                var finish = new Date(val.end).getTime();
+                if( (start > now||now > finish) && (now > start||start > now + 14*24*60*60*1000)) return;
                 val.end -= 1; // exclude finish moment
                 newElem = $("<tr></tr>").addClass("schedule_table_row");
                 newElem.css("background-color", val.class == "event-warning"? "#fdf1ba" : "#fae3e3");
