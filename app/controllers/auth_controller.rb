@@ -1,6 +1,7 @@
 class AuthController < ApplicationController
   before_filter :signin_required, only: [:signout]
-  before_filter :signout_required, only: [:index, :signin, :signup]
+  before_filter :signout_required, only: [:signin]
+  before_filter :admin_required, only: [:index, :signup]
   def index
   end
   
@@ -9,15 +10,13 @@ class AuthController < ApplicationController
     if duplicate_user.nil?
       new_user = User.new
       new_user.username = params[:username]
+      new_user.realname = params[:realname]
       new_user.password = encrypt(params[:password])
       new_user.save
-      flash[:message_navbar] = "가입하였습니다"
-      flash[:success_navbar] = true
+      redirect_to "/auth", notice: "Succeed to signup"
     else 
-      flash[:message_navbar] = "가입에 실패하였습니다"
-      flash[:success_navbar] = false
+      redirect_to "/auth", alert: "Failed to signup"
     end
-    redirect_to "/"
   end
   
   def signin

@@ -18,6 +18,7 @@ class ScheduleController < ApplicationController
   def get_events
     event_response = Hash.new
     events = Event.all
+    now = DateTime.now
     begin
       event_response[:result] = Array.new
       events.each do |event|
@@ -28,7 +29,7 @@ class ScheduleController < ApplicationController
           :class => event.klass,
           :start => event.start.to_datetime.strftime('%Q').to_i,
           :end   => event.finish.to_datetime.strftime('%Q').to_i
-        }) if DateTime.now < event.finish
+        }) if now <= event.finish
       end
       event_response[:success] = 1
     rescue Exception

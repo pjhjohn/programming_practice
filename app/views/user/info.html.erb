@@ -3,10 +3,16 @@
   <div class="col-md-offset-3 col-md-6 well">
     <% user = User.find_by_id(params[:id])%>
     <% unless user.nil? %>
-      <div>USERNAME : <%= user.username %></div>
-      <div>EMAIL : <%= user.email %></div>
-      <div>게시물 수 : <%= Post.where(user_id: params[:id]).count %></div>
-      <div>댓글 수 : <%= Reply.where(user_id: params[:id]).count %></div>
+      <table class="table table-condensed" style="margin-bottom:0px;">
+        <tbody>
+          <tr><td>username</td><td><%= user.username %></td></tr>
+          <tr><td>real name</td><td><%= user.realname %></td></tr>
+          <tr><td># of posts written</td><td><%= Post.where(user_id: params[:id]).count %></td></tr>
+          <tr><td># of replies written</td><td><%= Reply.where(user_id: params[:id]).count %></td></tr>
+          <tr><td></td><td></td></tr>
+        </tbody>
+      </table>
+      <a href="/auth/signout" class="btn btn-danger" style="width:100%">SignOut</a>
     <% end %>
   </div>
   <% if params[:id]==(session[:user_id].to_s) %>
@@ -28,8 +34,8 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default">Change Username</button>
+        <div class="col-md-offset-2 col-md-10">
+          <button type="submit" class="btn btn-primary" style="width:100%;">Change Username</button>
         </div>
       </div>  
     </form>
@@ -51,30 +57,10 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default">Change Password</button>
+        <div class="col-md-offset-2 col-md-10">
+          <button type="submit" class="btn btn-primary" style="width:100%;">Change Password</button>
         </div>
       </div>  
-    </form>
-   <%# Change Email %>
-    <form class="col-md-offset-3 col-md-6  well form-horizontal" action="/user/change_email" method="POST">
-      <div class="form-group">
-        <label class="col-md-2" for="new_email">New Email</label>
-        <div class="col-md-10">
-          <input type="text" name="new_email" class="form-control" placeholder="New Email" required>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-2" for="password">Password</label>
-        <div class="col-md-10">
-          <input type="password" name="password" class="form-control" placeholder="Password" required>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default">Change Email</button>
-        </div>
-      </div>
     </form>
   <% end %>
 </div>

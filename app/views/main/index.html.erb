@@ -32,7 +32,7 @@
   <div class="col-md-12 well main-sidebar">
     <div class="col-md-12 shadow" style="padding:0px;">
       <center>
-        <h4>Announcements</h4>
+        <a href="/board" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Recent Announcements</h4></a>
       </center>
     </div>
     <table class="table" style="margin-bottom:0px">
@@ -50,7 +50,7 @@
   <div class="col-md-12 well main-sidebar" style="padding-bottom:0px;">
     <div class="col-md-12 shadow" style="padding:0px;">
       <center>
-        <h4>Schedules</h4>
+        <a href="/schedule" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Upcoming Schedules</h4></a>
       </center>
     </div>
     <table class="table" style="margin-bottom:0px">
@@ -139,9 +139,7 @@
               $.each(events, function(key, val) {
                 val.end -= 1; // exclude finish moment
                 newElem = $("<tr></tr>").addClass("schedule_table_row");
-                if (val.class == "event-warning") {
-                  newElem.css("background-color", "#e9e9e9");
-                }
+                newElem.css("background-color", val.class == "event-warning"? "#fdf1ba" : "#fae3e3");
                 $("<td></td>").css("text-align","center").html(getDateInterval(val.start, val.end)).appendTo(newElem);
                 $("<td></td>").css("text-align","left")
                   .html( $("<a></a>").attr("href", "/schedule/event/" + val.id).html(val.title) )

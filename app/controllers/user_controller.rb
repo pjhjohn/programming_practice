@@ -51,21 +51,4 @@ class UserController < ApplicationController
       redirect_to "/"
     end
   end
-  
-  def change_email
-    if user_active?
-      user = User.find_by_id(session[:user_id])
-      if !user.nil? and user.password == encrypt(params[:password])
-          user.email = params[:new_email]
-          user.save
-          flash[:success] = "SUCCESS TO CHANGE EMAIL"
-      else
-        flash[:alert] = "FAILED TO CHANGE EMAIL"
-      end
-      flash[:change_email] = true
-      redirect_to "/user/info/#{session[:user_id]}"
-    else
-      redirect_to "/"
-    end
-  end
 end

@@ -29,12 +29,8 @@
       <% unless user.nil? %>
         <ul class="nav navbar-nav navbar-right">
           <li<%= " class=active" if session[:navbar_category]=="userinfo" %>><a href="/user/info/<%= user.id %>">Hello, <%= user.username %></a></li>
-          <li><a href="/auth/signout">SignOut</a></li>
         </ul>
       <% else %>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/auth">SignUp</a></li>
-        </ul>
         <form class="navbar-form navbar-right" role="form" action="/auth/signin" method="POST">
           <input class="form-control" name="username" type="text" placeholder="Name" required/>
           <input class="form-control" name="password" type="password" placeholder="Password" required/>
