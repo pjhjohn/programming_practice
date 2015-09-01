@@ -20,8 +20,7 @@ class AdminController < ApplicationController
       new_user = User.new
       new_user.username = params[:new_username]
       new_user.password = encrypt(params[:password])
-      new_user.name = params[:new_name]
-      new_user.email = params[:new_email]
+      new_user.realname = params[:new_name]
       new_user.save
       flash[:success] = "SUCCESS TO CREATE USER"
     else
@@ -50,8 +49,7 @@ class AdminController < ApplicationController
       if duplicate_user.nil? or user.username == params[:new_username]
         user.username = params[:new_username] if params[:new_username].present?
         user.password = encrypt(params[:password]) if params[:password].present?
-        user.name = params[:new_name] if params[:new_name].present?
-        user.email = params[:new_email] if params[:new_email].present?
+        user.realname = params[:new_name] if params[:new_name].present?
         user.save
       end
       pagenum = ( User.all.count - user.id ) / 20 + 1

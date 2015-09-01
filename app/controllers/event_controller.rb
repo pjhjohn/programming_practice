@@ -36,7 +36,9 @@ class EventController < ApplicationController
       body:  params[:body],
       klass: params[:klass],
       start: DateTime.strptime(params[:start], '%s'),
-      finish: DateTime.strptime(params[:finish], '%s')
+      finish: DateTime.strptime(params[:finish], '%s'),
+      attachment_title: params[:attachment_title],
+      attachment_url: params[:attachment_url]
     )
     event.save
     event.url = "#{event.url}/#{event.id}"
@@ -53,6 +55,8 @@ class EventController < ApplicationController
         event2update.klass = params[:klass] if params[:klass].present?
         event2update.start = DateTime.strptime(params[:start], '%s') if params[:start].present?
         event2update.finish = DateTime.strptime(params[:finish], '%s') if params[:finish].present?
+        event2update.attachment_title = params[:attachment_title] if params[:attachment_title].present?
+        event2update.attachment_url   = params[:attachment_url  ] if params[:attachment_url  ].present?
         event2update.save
         redirect_to "/schedule/event/#{params[:id]}", notice: "Successfully updated"
       else

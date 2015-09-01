@@ -3,7 +3,7 @@
   <td class="center-middle"><%= user.username %></td>
   <td class="center-middle"><%= Post.where(user_id: user.id).count %></td>
   <td class="center-middle"><%= Reply.where(user_id: user.id).count %></td>
-  <td class="center-middle"><%= user.created_at.strftime("%Y-%m-%d") %></td>
+  <td class="center-middle"><%= user.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
   <td class="center-middle">
     <div class="btn-group">
     <% if user.is_admin? %>

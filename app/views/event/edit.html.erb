@@ -47,6 +47,16 @@
         <input id="finish_datetime" type="text" name="finish" class="form-control" value="<%= @event.finish.to_i %>" required>
       </div>
     </div>
+    <%# Attachments %>
+    <div class="form-group">
+      <label class="col-md-2" for="attachment_title">Attachments</label>
+      <div class="col-md-5">
+        <input type="text" name="attachment_title" class="form-control" placeholder="title" value="<%= @event.attachment_title %>" required>
+      </div>
+      <div class="col-md-5">
+        <input type="text" name="attachment_url" class="form-control" placeholder="url" value="<%= @event.attachment_url %>" required>
+      </div>
+    </div>
     <%# Submit %>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

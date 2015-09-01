@@ -5,6 +5,8 @@ class CreateEvents < ActiveRecord::Migration
       t.string :body
       t.string :klass
       t.string :url, default: "/schedule/event"
+      t.string :attachment_title
+      t.string :attachment_url
       t.datetime :start
       t.datetime :finish
       t.timestamps null: false

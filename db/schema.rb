@@ -17,11 +17,13 @@ ActiveRecord::Schema.define(version: 20150824004619) do
     t.string   "title"
     t.string   "body"
     t.string   "klass"
-    t.string   "url",        default: "/schedule/event"
+    t.string   "url",              default: "/schedule/event"
+    t.string   "attachment_title"
+    t.string   "attachment_url"
     t.datetime "start"
     t.datetime "finish"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
   end
 
   create_table "posts", force: :cascade do |t|
