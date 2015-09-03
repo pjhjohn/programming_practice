@@ -4,7 +4,7 @@
 <tr<%= ' class=info' if !params[:post_id].nil? and params[:post_id]==post.id.to_s %>>
 <% end %>
   <td style="text-align:center;"><%= post.is_announcement ? "공지" : post.id %></td>
-  <td style="text-align:center;"><%= post.user.username %></td>
+  <td style="text-align:center;"><%= post.user.realname %></td>
   <% if params[:page_id].nil? %>
     <td><%= truncate post.title, length:40 %></td>
   <% else %>

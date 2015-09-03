@@ -1,6 +1,6 @@
 <div class="col-md-offset-2 col-md-8 well">
   <% unless post.user.nil? %>
-    <div class="col-md-6" style="padding:0px;text-align:left;font-weight:bold;"><%= post.user.username %></div>
+    <div class="col-md-6" style="padding:0px;text-align:left;font-weight:bold;"><%= post.user.realname %></div>
     <div class="col-md-6" style="padding:0px;text-align:right;">작성일 : <%= post.created_at.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></div>
   <% end %>
 </div>

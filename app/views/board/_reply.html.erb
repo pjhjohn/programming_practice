@@ -1,5 +1,5 @@
 <div class="col-xs-12" style="padding:0px;">
-  <span style="font-weight:bold;"><%= reply.user.username %>  :  </span>
+  <span style="font-weight:bold;"><%= reply.user.realname %>  :  </span>
   <span style="word-break:break-all;">
     <%= reply.body %>
     <% if !reply.user.nil? and reply.user.id == session[:user_id] or reply.user.is_admin? %>
