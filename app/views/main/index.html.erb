@@ -127,6 +127,14 @@
               $( deferred.resolve );
           })
         ).done(function(){
+          var class_color = {
+            "event-important" : "#fae3e3",
+            "event-warning"   : "#fdf1ba",
+            "event-info"      : "#d1e8ff",
+            "event-inverse"   : "#c1c1c1",
+            "event-success"   : "#caffca",
+            "event-special"   : "#ffe6ff"
+          }
           var options = {
             view: "month",
             tmpl_path: "/calendar/tmpls/",
@@ -137,13 +145,15 @@
               var list = $('#event-list');
               list.html('');
               var now = new Date().getTime();
+              var days = 24*60*60*1000;
               $.each(events, function(key, val) {
                 var start = new Date(val.start).getTime();
                 var finish = new Date(val.end).getTime();
-                if( (start > now||now > finish) && (now > start||start > now + 14*24*60*60*1000)) return;
+                if(!(now - 7*days <= finish && start <= now + 14*days)) return;
+                if(now-7*days <= finish && finish <= now) val.class = "event-inverse";
                 val.end -= 1; // exclude finish moment
                 newElem = $("<tr></tr>").addClass("schedule_table_row");
-                newElem.css("background-color", val.class == "event-warning"? "#fdf1ba" : "#fae3e3");
+                newElem.css("background-color", class_color[val.class] || "#dddddd");
                 $("<td></td>").css("text-align","center").html(getDateInterval(val.start, val.end)).appendTo(newElem);
                 $("<td></td>").css("text-align","left")
                   .html( $("<a></a>").attr("href", "/schedule/event/" + val.id).html(val.title) )
