@@ -1,11 +1,11 @@
 <div class="col-md-offset-2 col-md-8 well">
   <% unless post.user.nil? %>
     <div class="col-md-6" style="padding:0px;text-align:left;font-weight:bold;"><%= post.user.username %></div>
-    <div class="col-md-6" style="padding:0px;text-align:right;">작성일 : <%= post.created_at.strftime("%F %H:%M").gsub(/\-/,'.') %></div>
+    <div class="col-md-6" style="padding:0px;text-align:right;">작성일 : <%= post.created_at.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></div>
   <% end %>
 </div>
 <div class="col-md-offset-2 col-md-8 well" style="margin-top:-20px;">
-  <div class="col-md-12" style="padding:0px;"><%=raw post.body.gsub(/\n/, '<br/>') %></div>
+  <div class="col-md-12 post_font" style="padding:0px;"><%=raw post.body.gsub(/\n/, '<br/>') %></div>
   <% user = User.find_by_id(session[:user_id]) %>
   <% if !user.nil? and (user.is_admin or user.id==post.user_id) %>
     <a href="/board/edit/<%= post.id %>?page_id=<%= params[:page_id] %>" class="pull-right btn btn-warning" style="margin-top:19px;">Edit</a>

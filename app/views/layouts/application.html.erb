@@ -6,6 +6,7 @@
   <title>Programming Practice 2015</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/nanumgothic.css"></link>
+  <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -61,10 +62,19 @@
   .schedule_table_row:hover  {
     background-color:#eee !important;
   }
-  .delete_reply{
+  .delete_reply {
     cursor:pointer;
     position:absolute;
     right:5px;
     top:0px;
+  }
+  .post_font {
+    font-family: 'Inconsolata', 'Nanum Gothic';
+  }
+  .schedule_body {
+    margin:10px 0px;
+    padding:10px 5px;
+    border-top:1px solid #333;
+    border-bottom:1px solid #333;
   }
 </style>
