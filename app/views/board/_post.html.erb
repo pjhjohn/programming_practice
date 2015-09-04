@@ -5,7 +5,7 @@
   <% end %>
 </div>
 <div class="col-md-offset-2 col-md-8 well" style="margin-top:-20px;">
-  <div class="col-md-12 post_font" style="padding:0px;"><%=raw post.body.gsub(/\n/, '<br/>') %></div>
+  <div class="col-md-12 post_font" style="padding:0px;"><%= post.body %></div>
   <% user = User.find_by_id(session[:user_id]) %>
   <% if !user.nil? and (user.is_admin or user.id==post.user_id) %>
     <a href="/board/edit/<%= post.id %>?page_id=<%= params[:page_id] %>" class="pull-right btn btn-warning" style="margin-top:19px;">Edit</a>
