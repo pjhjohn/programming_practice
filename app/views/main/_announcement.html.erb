@@ -1,6 +1,6 @@
 <% if post.is_announcement %>
-  <tr>
+  <tr class="bg-primary">
     <td style="text-align:center;"><%= post.created_at.in_time_zone('Asia/Seoul').strftime("%F").gsub(/\-/,'.') %></td>
-    <td style="text-align:center;"><a href="/board/read/0/<%= post.id %>"><%= truncate post.title, length:26 %></a></td>
+    <td style="text-align:center;text-decoration:none;"><a href="/board/read/0/<%= post.id %>"><%= truncate post.title, length:26 %></a></td>
   </tr>
 <% end %>

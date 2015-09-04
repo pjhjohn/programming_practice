@@ -1,7 +1,7 @@
-<% if post.is_announcement %>
-<tr class="danger">
+<% if !params[:post_id].nil? and params[:post_id]==post.id.to_s %>
+<tr class="info">
 <% else %>
-<tr<%= ' class=info' if !params[:post_id].nil? and params[:post_id]==post.id.to_s %>>
+<tr<%= ' class=bg-primary' if post.is_announcement %>>
 <% end %>
   <td style="text-align:center;"><%= post.is_announcement ? "공지" : post.id %></td>
   <td style="text-align:center;"><%= post.user.realname %></td>
