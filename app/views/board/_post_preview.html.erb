@@ -1,14 +1,16 @@
 <% if !params[:post_id].nil? and params[:post_id]==post.id.to_s %>
-<tr class="info">
+<div class="row bbs-row info" style="padding:10px 0px" page-id="<%=params[:page_id]%>" post-id="<%=post.id%>">
 <% else %>
-<tr<%= ' class=bg-primary' if post.is_announcement %>>
+<div class="row bbs-row<%=' bg-primary' if post.is_announcement %>" style="padding:10px 0px" page-id="<%=params[:page_id]%>" post-id="<%=post.id%>">
 <% end %>
-  <td style="text-align:center;"><%= post.is_announcement ? "공지" : post.id %></td>
-  <td style="text-align:center;"><%= post.user.realname %></td>
+  <div class="col-md-1 col-xs-2 bbs-content"><%= post.is_announcement ? "공지" : post.id %></div>
+  <div class="col-md-2 col-xs-4 bbs-content"><%= post.user.realname %></div>
+  <div class="col-md-2 col-md-push-7 col-xs-6 bbs-content bbs-date"><%= time_ago_in_words(post.created_at) %> ago</div>
+  <div class="col-md-7 col-md-pull-2 col-xs-12 bbs-content bbs-subject">
   <% if params[:page_id].nil? %>
-    <td><%= truncate post.title, length:40 %></td>
+    <%= truncate post.title, length:40 %>
   <% else %>
-    <td><a href="/board/read<%= "/#{params[:page_id]}" %><%= "/#{post.id}" %>"><%= truncate post.title, length:40 %></a></td>
+    <a href="/board/read<%= "/#{params[:page_id]}" %><%= "/#{post.id}" %>"><%= truncate post.title, length:40 %></a>
   <% end %>
-  <td style="text-align:center;"><%= time_ago_in_words(post.created_at) %> ago</td>
-</tr>
+  </div>
+</div>

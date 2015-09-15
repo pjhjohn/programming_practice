@@ -1,191 +1,197 @@
-<div class="col-md-5" style="padding:0px 7.5px;">
-  <div class="col-md-12 well main-sidebar">
-    <div class="col-md-12 shadow" style="padding:0px;">
-      <center>
-        <h4>Course Information</h4>
-      </center>
+<div class="row">
+  <div class="col-md-5 sidebar-wrap">
+    <div class="col-md-12 well main-sidebar">
+      <div class="col-md-12 shadow" style="padding:0px;">
+        <center>
+          <h4>Course Information</h4>
+        </center>
+      </div>
+      <ul class="nav nav-pills nav-stacked" style="padding-bottom:10px">
+        <li><a href="http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=2015&openShtmFg=U000200002&openDetaShtmFg=U000300001&sbjtCd=4190.103A&ltNo=002&sbjtSubhCd=000" target="_blank">
+          <span>Course Overview</span><br>
+          4190.103A 002 프로그래밍 연습
+        </a></li>
+        <li><a href="http://mrl.snu.ac.kr/~jehee/" target="_blank">
+          <span>Professor</span><br>
+          Jehee Lee
+        </a></li>
+        <li><a href="https://users.soe.ucsc.edu/~pohl/abc4.html" target="_blank">
+          <span>TextBook</span><br>
+          A Book on C, Kelley and Pohl, 4th edition, Addison Wesley.
+        </a></li>
+        <li><a>
+          <span>Lecture Hour (16:00~18:00)</span><br>
+          Tue : 302-208, Thu : 302-311-1
+        </a></li>
+        <li><a href="http://mrl.snu.ac.kr/" target="_blank" style="padding-bottom:0;"><span>T/A</span></a></li>
+        <li><a href="http://mrl.snu.ac.kr/~pjhjohn/" target="_blank" style="padding-top:0;padding-bottom:0;">Joonho Park</a></li>
+        <li><a href="http://mrl.snu.ac.kr/~shpark/" target="_blank" style="padding-top:0;padding-bottom:0;">Soohwan Park</a></li>
+        <li><a href="http://mrl.snu.ac.kr/~jspark/" target="_blank" style="padding-top:0;padding-bottom:0;">Jungsu Park</a></li>
+        <li><a href="http://mrl.snu.ac.kr/~seiing/" target="_blank" style="padding-top:0;padding-bottom:0">Sehee Min</a></li>
+      </ul>
     </div>
-    <ul class="nav nav-pills nav-stacked" style="padding-bottom:10px">
-      <li><a href="http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=2015&openShtmFg=U000200002&openDetaShtmFg=U000300001&sbjtCd=4190.103A&ltNo=002&sbjtSubhCd=000" target="_blank">
-        <span>Course Overview</span><br>
-        4190.103A 002 프로그래밍 연습
-      </a></li>
-      <li><a href="http://mrl.snu.ac.kr/~jehee/" target="_blank">
-        <span>Professor</span><br>
-        Jehee Lee
-      </a></li>
-      <li><a href="https://users.soe.ucsc.edu/~pohl/abc4.html" target="_blank">
-        <span>TextBook</span><br>
-        A Book on C, Kelley and Pohl, 4th edition, Addison Wesley.
-      </a></li>
-      <li><a>
-        <span>Lecture Hour (16:00~18:00)</span><br>
-        Tue : 302-208, Thu : 302-311-1
-      </a></li>
-      <li><a href="http://mrl.snu.ac.kr/" target="_blank" style="padding-bottom:0;"><span>T/A</span></a></li>
-      <li><a href="http://mrl.snu.ac.kr/~pjhjohn/" target="_blank" style="padding-top:0;padding-bottom:0;">Joonho Park</a></li>
-      <li><a href="http://mrl.snu.ac.kr/~shpark/" target="_blank" style="padding-top:0;padding-bottom:0;">Soohwan Park</a></li>
-      <li><a href="http://mrl.snu.ac.kr/~jspark/" target="_blank" style="padding-top:0;padding-bottom:0;">Jungsu Park</a></li>
-      <li><a href="http://mrl.snu.ac.kr/~seiing/" target="_blank" style="padding-top:0;padding-bottom:0">Sehee Min</a></li>
-    </ul>
-  </div>
-  <div class="col-md-12 well main-sidebar">
-    <div class="col-md-12 shadow" style="padding:0px;">
-      <center>
-        <a href="/board" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Recent Announcements</h4></a>
-      </center>
+    <div class="col-md-12 well main-sidebar">
+      <div class="col-md-12 shadow" style="padding:0px;">
+        <center>
+          <a href="/board" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Recent Announcements</h4></a>
+        </center>
+      </div>
+      <table class="table" style="margin-bottom:0px">
+        <thead>
+          <th style="text-align:center">날짜</th>
+          <th style="text-align:center">내용</th>
+        </thead>
+        <tbody>
+          <% @announcements.each do |post| %>
+            <%= render partial: "main/announcement", :locals => { :post => post } %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-    <table class="table" style="margin-bottom:0px">
-      <thead>
-        <th style="text-align:center">날짜</th>
-        <th style="text-align:center">내용</th>
-      </thead>
-      <tbody>
-        <% @announcements.each do |post| %>
-          <%= render partial: "main/announcement", :locals => { :post => post } %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-md-12 well main-sidebar" style="padding-bottom:0px;">
-    <div class="col-md-12 shadow" style="padding:0px;">
-      <center>
-        <a href="/schedule" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Upcoming Schedules</h4></a>
-      </center>
+    <div class="col-md-12 well main-sidebar" style="padding-bottom:0px;">
+      <div class="col-md-12 shadow" style="padding:0px;">
+        <center>
+          <a href="/schedule" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Upcoming Schedules</h4></a>
+        </center>
+      </div>
+      <table class="table" style="margin-bottom:0px">
+        <thead>
+          <th style="text-align:center">날짜</th>
+          <th style="text-align:center">내용</th>
+        </thead>
+        <tbody id="event-list">
+        </tbody>
+      </table>
     </div>
-    <table class="table" style="margin-bottom:0px">
-      <thead>
-        <th style="text-align:center">날짜</th>
-        <th style="text-align:center">내용</th>
-      </thead>
-      <tbody id="event-list">
-      </tbody>
-    </table>
   </div>
-</div>
 
-<%# Calendar - reference : https://github.com/Serhioromano/bootstrap-calendar%>
-<link rel="stylesheet" href="calendar/css/calendar.css">
-<div class="col-md-7" style="padding:0px 7.5px;">
-  <div class="col-md-12 well" style="padding:0px 0px 15px 0px">
-    <div class="col-md-12 shadow" style="padding:0px;margin-bottom:20px;">
-      <center><h3 id="calendar-title" class="col-md-12" style="text-align:center;"></h3></center>
-    </div>
-    <div class="col-md-12 clearfix"> 
-      <div class="pull-left">
-        <div class="btn-group pull-lef">
-          <button class="btn btn-primary" data-calendar-nav="prev">&lt;&lt; Prev</button>
-          <button class="btn" data-calendar-nav="today">Today</button>
-          <button class="btn btn-primary" data-calendar-nav="next">Next &gt;&gt;</button>
+  <%# Calendar - reference : https://github.com/Serhioromano/bootstrap-calendar%>
+  <link rel="stylesheet" href="calendar/css/calendar.css">
+  <div class="col-md-7 sidebar-wrap">
+    <a id="attendence" href="https://docs.google.com/spreadsheets/d/1CGRDLgcdAH62T8pek9mPyfkjQeLnsVuFfuF3NY6LMEk/edit?usp=sharing" target="_blank">
+      <div class="col-md-12 alert alert-primary" style="color:white;background-color:#666;">출결 & 과제 명단 (클릭하여 이동)<br>정정 및 이의제기는 게시판 및 메일 <span style="color:orange;">mrlpp2015@gmail.com</span> 로 해결</div>
+    </a>
+    <div class="col-md-12 well" style="padding:0px 0px 15px 0px">
+      <div class="col-md-12 shadow" style="padding:0px;margin-bottom:20px;">
+        <center><h3 id="calendar-title" class="col-md-12" style="text-align:center;"></h3></center>
+      </div>
+      <div class="col-md-12 clearfix">
+        <div class="col-md-5 col-xs-12" style="padding:0px;">
+          <div class="btn-group col-xs-12" style="padding:0px;">
+            <button class="btn btn-primary col-xs-4" data-calendar-nav="prev">&lt;&lt; Prev</button>
+            <button class="btn col-xs-4" data-calendar-nav="today">Today</button>
+            <button class="btn btn-primary col-xs-4" data-calendar-nav="next">Next &gt;&gt;</button>
+          </div>
+        </div>
+        <div class="col-md-2 col-xs-12" style="height:5px;"></div>
+        <div class="col-md-5 col-xs-12" style="padding:0px;">
+          <div class="btn-group col-xs-12" style="padding:0px;">
+            <button class="btn btn-warning active col-xs-4" data-calendar-view="month">Month</button>
+            <button class="btn btn-warning col-xs-4" data-calendar-view="week">Week</button>
+            <button class="btn btn-warning col-xs-4" data-calendar-view="day">Day</button>
+          </div>
         </div>
       </div>
-      <div class="pull-right form-inline">
-        <div class="btn-group">
-          <button class="btn btn-warning active" data-calendar-view="month">Month</button>
-          <button class="btn btn-warning" data-calendar-view="week">Week</button>
-          <button class="btn btn-warning" data-calendar-view="day">Day</button>
-        </div>
+      <div class="col-md-12" style="margin-top:10px">
+        <div id="calendar" class="cal-context" style="width: 100%;"><div class="cal-row-fluid cal-row-head">
       </div>
-    </div>
-    <div class="col-md-12" style="margin-top:10px">
-      <div id="calendar" class="cal-context" style="width: 100%;"><div class="cal-row-fluid cal-row-head">
-    </div>
-    <%# Scripts for Calendar %>
-    <script type="text/javascript">
-      var getDateInterval = function(start_ms, end_ms) {
-        if(start_ms==undefined||end_ms==undefined) return;
-        var start_date = new Date(start_ms);
-        var end_date = new Date(end_ms);
-        var start_str = "{0}.{1}.{2}".format(
-          start_date.getFullYear(),
-          (start_date.getMonth()<9?"0":"") + (start_date.getMonth()+1),
-          (start_date.getDate()<10?"0":"") + start_date.getDate()
-        );
-        if(start_date.getFullYear()==end_date.getFullYear()) {
-          if(start_date.getMonth()==end_date.getMonth()) {
-            if(start_date.getDate()==end_date.getDate()) return start_str
-            else return start_str + "~{0}".format(
+      <%# Scripts for Calendar %>
+      <script type="text/javascript">
+        var getDateInterval = function(start_ms, end_ms) {
+          if(start_ms==undefined||end_ms==undefined) return;
+          var start_date = new Date(start_ms);
+          var end_date = new Date(end_ms);
+          var start_str = "{0}.{1}.{2}".format(
+            start_date.getFullYear(),
+            (start_date.getMonth()<9?"0":"") + (start_date.getMonth()+1),
+            (start_date.getDate()<10?"0":"") + start_date.getDate()
+          );
+          if(start_date.getFullYear()==end_date.getFullYear()) {
+            if(start_date.getMonth()==end_date.getMonth()) {
+              if(start_date.getDate()==end_date.getDate()) return start_str
+              else return start_str + "~{0}".format(
+                (end_date.getDate()<10?"0":"") + end_date.getDate()
+              );
+            } else return start_str + "~{0}.{1}".format(
+              (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
               (end_date.getDate()<10?"0":"") + end_date.getDate()
             );
-          } else return start_str + "~{0}.{1}".format(
+          } else return start_str + "~{0}.{1}.{2}".format(
+            end_date.getFullYear(),
             (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
             (end_date.getDate()<10?"0":"") + end_date.getDate()
           );
-        } else return start_str + "~{0}.{1}.{2}".format(
-          end_date.getFullYear(),
-          (end_date.getMonth()<9?"0":"") + (end_date.getMonth()+1),
-          (end_date.getDate()<10?"0":"") + end_date.getDate()
-        );
-      }
-      $(document).ready(function(){
-        $.when(
-          $.getScript( "/calendar/components/underscore/underscore-min.js" ),
-          $.getScript( "/calendar/components/bootstrap3/js/bootstrap.min.js" ),
-          $.getScript( "/calendar/js/calendar.js" ),
-          $.getScript( "/calendar/js/language/ko-KR.js" ),
-          $.Deferred(function( deferred ){
-              $( deferred.resolve );
-          })
-        ).done(function(){
-          var class_color = {
-            "event-important" : "#fae3e3",
-            "event-warning"   : "#fdf1ba",
-            "event-info"      : "#d1e8ff",
-            "event-inverse"   : "#c1c1c1",
-            "event-success"   : "#caffca",
-            "event-special"   : "#ffe6ff"
-          }
-          var options = {
-            view: "month",
-            tmpl_path: "/calendar/tmpls/",
-            // language: "ko-KR",
-            events_source: "/schedule/get_events",
-            onAfterEventsLoad: function(events) {
-              if(!events) return;
-              var list = $('#event-list');
-              list.html('');
-              var now = new Date().getTime();
-              var days = 24*60*60*1000;
-              $.each(events, function(key, val) {
-                var start = new Date(val.start).getTime();
-                var finish = new Date(val.end).getTime();
-                if(!(now - 7*days <= finish && start <= now + 14*days)) return;
-                if(now-7*days <= finish && finish <= now) val.class = "event-inverse";
-                val.end -= 1; // exclude finish moment
-                newElem = $("<tr></tr>").addClass("schedule_table_row");
-                newElem.css("background-color", class_color[val.class] || "#dddddd");
-                $("<td></td>").css("text-align","center").html(getDateInterval(val.start, val.end)).appendTo(newElem);
-                $("<td></td>").css("text-align","left")
-                  .html( $("<a></a>").attr("href", "/schedule/event/" + val.id).html(val.title) )
-                  .appendTo(newElem);
-                newElem.appendTo(list);
+        }
+        $(document).ready(function(){
+          $.when(
+            $.getScript( "/calendar/components/underscore/underscore-min.js" ),
+            $.getScript( "/calendar/components/bootstrap3/js/bootstrap.min.js" ),
+            $.getScript( "/calendar/js/calendar.js" ),
+            $.getScript( "/calendar/js/language/ko-KR.js" ),
+            $.Deferred(function( deferred ){
+                $( deferred.resolve );
+            })
+          ).done(function(){
+            var class_color = {
+              "event-important" : "#fae3e3",
+              "event-warning"   : "#fdf1ba",
+              "event-info"      : "#d1e8ff",
+              "event-inverse"   : "#c1c1c1",
+              "event-success"   : "#caffca",
+              "event-special"   : "#ffe6ff"
+            }
+            var options = {
+              view: "month",
+              tmpl_path: "/calendar/tmpls/",
+              // language: "ko-KR",
+              events_source: "/schedule/get_events",
+              onAfterEventsLoad: function(events) {
+                if(!events) return;
+                var list = $('#event-list');
+                list.html('');
+                var now = new Date().getTime();
+                var days = 24*60*60*1000;
+                $.each(events, function(key, val) {
+                  var start = new Date(val.start).getTime();
+                  var finish = new Date(val.end).getTime();
+                  if(!(now - 7*days <= finish && start <= now + 14*days)) return;
+                  if(now-7*days <= finish && finish <= now) val.class = "event-inverse";
+                  val.end -= 1; // exclude finish moment
+                  newElem = $("<tr></tr>").addClass("schedule_table_row");
+                  newElem.css("background-color", class_color[val.class] || "#dddddd");
+                  $("<td></td>").css("text-align","center").html(getDateInterval(val.start, val.end)).appendTo(newElem);
+                  $("<td></td>").css("text-align","left")
+                    .html( $("<a></a>").attr("href", "/schedule/event/" + val.id).html(val.title) )
+                    .appendTo(newElem);
+                  newElem.appendTo(list);
+                });
+              },
+              onAfterViewLoad: function(view) {
+                $('#calendar-title').text(this.getTitle());
+                $('.btn-group button').removeClass('active');
+                $('button[data-calendar-view="' + view + '"]').addClass('active');
+              },
+              first_day: 2,
+              format12: false,
+              weekbox: false,
+              display_week_numbers: false
+            };
+            var calendar = $("#calendar").calendar(options);
+            $('.btn-group button[data-calendar-nav]').each(function() {
+              var $this = $(this);
+              $this.click(function() {
+                calendar.navigate($this.data('calendar-nav'));
               });
-            },
-            onAfterViewLoad: function(view) {
-              $('#calendar-title').text(this.getTitle());
-              $('.btn-group button').removeClass('active');
-              $('button[data-calendar-view="' + view + '"]').addClass('active');
-            },
-            first_day: 2,
-            format12: false,
-            weekbox: false,
-            display_week_numbers: false
-          };
-          var calendar = $("#calendar").calendar(options);
-          $('.btn-group button[data-calendar-nav]').each(function() {
-            var $this = $(this);
-            $this.click(function() {
-              calendar.navigate($this.data('calendar-nav'));
             });
-          });
-          $('.btn-group button[data-calendar-view]').each(function() {
-            var $this = $(this);
-            $this.click(function() {
-              calendar.view($this.data('calendar-view'));
+            $('.btn-group button[data-calendar-view]').each(function() {
+              var $this = $(this);
+              $this.click(function() {
+                calendar.view($this.data('calendar-view'));
+              });
             });
           });
         });
-      });
-    </script>
+      </script>
+    </div>
   </div>
 </div>

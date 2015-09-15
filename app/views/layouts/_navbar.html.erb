@@ -32,9 +32,9 @@
         </ul>
       <% else %>
         <form class="navbar-form navbar-right" role="form" action="/auth/signin" method="POST">
-          <input class="form-control" name="username" type="text" placeholder="Name" style="width:100px;" required/>
-          <input class="form-control" name="password" type="password" placeholder="Password" style="width:100px;" required/>
-          <button type="submit" class="btn btn-primary" style="border-radius:4px;">SignIn</button>
+          <input class="form-control input-test" name="username" type="text" placeholder="Name" required/>
+          <input class="form-control input-test" name="password" type="password" placeholder="Password" required/>
+          <button type="submit" class="btn btn-primary submit-test" style="border-radius:4px;">SignIn</button>
         </form>
       <% end %>
       <% if flash[:message_navbar].present? %>
@@ -45,6 +45,22 @@
     </div>
   </div>
 </nav>
+<style>
+  @media (min-width: 768px) {
+    .input-test {
+      width:100px !important;
+    }
+  }
+  @media (max-width: 768px) {
+    .input-test:not(:first-child) {
+      margin-top:5px;
+    }
+    .submit-test {
+      margin-top:5px;
+      width:100%;
+    }
+  }
+</style>
 <script>
   $(document).ready(function(){
     function setNavbarBrand() {

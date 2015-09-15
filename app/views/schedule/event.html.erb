@@ -1,90 +1,96 @@
-<div class="col-md-5" style="padding:0px 7.5px;">
-  <div class="col-md-12 well" style="padding:0px;">
-    <div class="col-md-12 shadow">
-      <center>
-        <h4>Schedules</h4>
-      </center>
-    </div>
-    <div class="col-md-12" style="padding:0px;">
-      <table class="table" style="margin-bottom:0px;">
-        <thead>
-          <th style="text-align:center">날짜</th>
-          <th style="text-align:center">내용</th>
-        </thead>
-        <tbody>
-          <% @events.each do |event| %>
-            <%= render partial: "schedule/event_preview", :locals => { :event => event } %>
-          <% end %>
-        </tbody>
-      </table>
+<div class="row">
+  <div class="col-md-7 col-md-push-5 sidebar-wrap">
+    <%= render :partial => "layouts/flash", :locals => {:offset => 0, :size => 12} %>
+    <% unless @event.nil? %>
+      <div class="col-md-12 well">
+        <h5 style="text-align:right;margin:0">등록일 : <%= @event.created_at.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></h5>
+        <center><h3 class="col-md-12" style="font-weight:bold;text-align:center"><%= @event.title %></h3></center>
+        <center><h5 class="col-md-12" style="font-weight:bold;text-align:center"><%= @event.start.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') + "~" + @event.finish.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></h5></center>
+        <% unless @event.body.nil? %>
+          <div class="col-md-12 post_font schedule_body"><%= @event.body %></div>
+        <% end %>
+        <% unless @event.attachment_title.nil? or @event.attachment_url.nil? %>
+          <a href="<%= @event.attachment_url %>" class="btn btn-primary pull-left" style="margin-top:19px;" download=<%= @event.attachment_url.gsub(/.+\//,'') %>><%= @event.attachment_title %></a>
+        <% else %>
+          <div class="btn btn-default pull-left" style="margin-top:19px;">강의자료가 준비중입니다</div>
+        <% end %>
+        <% user = User.find_by_id(session[:user_id]) %>
+        <% if !user.nil? and user.is_admin %>
+          <div class="pull-right">
+            <a href="/admin/event/edit/<%= @event.id %>" class="btn btn-warning" style="margin-top:19px;">Edit</a>
+            <a href="/admin/event/remove/<%= @event.id %>" class="btn btn-danger" style="margin-top:19px;">Remove</a>
+            <div style="clear:both;"></div>
+          </div>
+        <% end %>
+        <div style="clear:both"></div>
+      </div>
+    <% else %>
+      <div class="col-md-12 well" style="font-weight:bold;">
+        <center>
+          <h3>Schedule Overview</h3>
+        </center>
+        <table class="table schedule-lecture">
+          <thead>
+            <td style="text-align:center;">일시</td>
+            <td style="text-align:center;">강좌내용</td>
+          </thead>
+          <tbody>
+            <tr><td>9/1</td><td><a href="/schedule/event/1">Course Intro</a></td></tr>
+            <tr><td>9/8</td><td><a href="/schedule/event/2">Overview (chap 1)</a></td></tr>
+            <tr><td>9/15</td><td><a href="/schedule/event/3">Lexical Elements, Operators, and the C system (chap 2)</a></td></tr>
+            <tr><td>9/22</td><td><a href="/schedule/event/4">Fundamental Data Types (chap 3)</a></td></tr>
+            <tr class="text-danger bg-danger"><td>9/29</td><td><a href="/schedule/event/5">No class (추석)</a></td></tr>
+            <tr><td>10/6</td><td><a href="/schedule/event/6">Flow of Control (chap 4)</a></td></tr>
+            <tr><td>10/13</td><td><a href="/schedule/event/7">Functions (chap 5)</a></td></tr>
+            <tr><td>10/20</td><td><a href="/schedule/event/8">Arrays, Pointers, and Strings (chap 6)</a></td></tr>
+            <tr><td>10/27</td><td><a href="/schedule/event/9">Bitwise Operators and Enumeration Types (chap 7), Preprocessor (chap 8)</a></td></tr>
+            <tr class="text-danger bg-danger"><td>11/3</td><td><a href="/schedule/event/10">No class (출장)</a></td></tr>
+            <tr><td>11/10</td><td><a href="/schedule/event/11">Structures and Unions (chap 9)</a></td></tr>
+            <tr><td>11/17</td><td><a href="/schedule/event/12">Function Pointers and Table Lookup (chap 9)</a></td></tr>
+            <tr><td>11/24</td><td><a href="/schedule/event/13">Structures and List Processing (chap 10)</a></td></tr>
+            <tr><td>12/1</td><td><a href="/schedule/event/14">Input/Output and the Operating System (chap 11)</a></td></tr>
+            <tr><td>12/8</td><td><a href="/schedule/event/15">Moving from C to C++ (chap 12)</a></td></tr>
+          </tbody>
+        </table>
+        <table class="table schedule-lecture" style="margin-bottom:0px;">
+          <thead>
+            <td style="text-align:center;">일시</td>
+            <td style="text-align:center;">실습내용</td>
+          </thead>
+          <tbody>
+            <tr><td>9/3</td><td><a href="/schedule/event/16">Linux 계정 만들기, cloud 설명 (아주 간단한 프로그램을 작성하고 compile)</a></td></tr>
+            <tr><td>9/10</td><td><a href="/schedule/event/17">Unix, Linux, C Shell (Compiler, Text Editor, IO redirection)</a></td></tr>
+            <tr class="bg-primary"><td>9/17~</td><td>TO BE ANNOUNCED</td></tr>
+          </tbody>
+        </table>
+        <style>
+          .schedule-lecture > tbody > tr > td:nth-child(1) {
+            text-align:center;
+          }
+        </style>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-5 col-md-pull-7 sidebar-wrap">
+    <div class="col-md-12 well" style="padding:0px;">
+      <div class="col-md-12 shadow">
+        <center>
+          <h4>Schedules</h4>
+        </center>
+      </div>
+      <div class="col-md-12" style="padding:0px;">
+        <table class="table" style="margin-bottom:0px;">
+          <thead>
+            <th style="text-align:center">날짜</th>
+            <th style="text-align:center">내용</th>
+          </thead>
+          <tbody>
+            <% @events.each do |event| %>
+              <%= render partial: "schedule/event_preview", :locals => { :event => event } %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
-
-<div class="col-md-7" style="padding:0px 7.5px 15px 7.5px">
-  <%= render :partial => "layouts/flash", :locals => {:offset => 0, :size => 12} %>
-  <% unless @event.nil? %>
-    <div class="col-md-12 well">
-      <h5 style="text-align:right;margin:0">등록일 : <%= @event.created_at.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></h5>
-      <center><h3 class="col-md-12" style="font-weight:bold;text-align:center"><%= @event.title %></h3></center>
-      <center><h5 class="col-md-12" style="font-weight:bold;text-align:center"><%= @event.start.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') + "~" + @event.finish.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></h5></center>
-      <% unless @event.body.nil? %>
-        <div class="col-md-12 post_font schedule_body"><%= @event.body %></div>
-      <% end %>
-      <% unless @event.attachment_title.nil? or @event.attachment_url.nil? %>
-        <a href="<%= @event.attachment_url %>" target="_blank" class="btn btn-primary pull-left" style="margin-top:19px;"><%= @event.attachment_title %></a>
-      <% else %>
-        <div class="btn btn-default pull-left" style="margin-top:19px;">강의자료가 준비중입니다</div>
-      <% end %>
-      <% user = User.find_by_id(session[:user_id]) %>
-      <% if !user.nil? and user.is_admin %>
-        <a href="/admin/event/edit/<%= @event.id %>" class="pull-right btn btn-warning" style="margin-top:19px;">Edit</a>
-        <a href="/admin/event/remove/<%= @event.id %>" class="pull-right btn btn-danger" style="margin-top:19px;margin-right:19px;">Remove</a>
-        <div style="clear:both"></div>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="col-md-12 well" style="font-weight:bold;">
-      <center>
-        <h3>Schedule Overview</h3>
-      </center>
-      <table class="table schedule-lecture">
-        <thead>
-          <td style="text-align:center;">일시</td>
-          <td style="text-align:center;">강좌내용</td>
-        </thead>
-        <tbody>
-          <tr><td>9/1</td><td>Course Intro</td></tr>
-          <tr><td>9/8</td><td>Overview (chap 1)</td></tr>
-          <tr><td>9/15</td><td>Lexical Elements, Operators, and the C system (chap 2)</td></tr>
-          <tr><td>9/22</td><td>Fundamental Data Types (chap 3)</td></tr>
-          <tr class="text-danger bg-danger"><td>9/29</td><td>No class (추석)</td></tr>
-          <tr><td>10/6</td><td>Flow of Control (chap 4)</td></tr>
-          <tr><td>10/13</td><td>Functions (chap 5)</td></tr>
-          <tr><td>10/20</td><td>Arrays, Pointers, and Strings (chap 6)</td></tr>
-          <tr><td>10/27</td><td>Bitwise Operators and Enumeration Types (chap 7), Preprocessor (chap 8)</td></tr>
-          <tr class="text-danger bg-danger"><td>11/3</td><td>No class (출장)</td></tr>
-          <tr><td>11/10</td><td>Structures and Unions (chap 9)</td></tr>
-          <tr><td>11/17</td><td>Function Pointers and Table Lookup (chap 9)</td></tr>
-          <tr><td>11/24</td><td>Structures and List Processing (chap 10)</td></tr>
-          <tr><td>12/1</td><td>Input/Output and the Operating System (chap 11)</td></tr>
-          <tr><td>12/8</td><td>Moving from C to C++ (chap 12)</td></tr>
-        </tbody>
-      </table>
-      <table class="table schedule-lecture" style="margin-bottom:0px;">
-        <thead>
-          <td style="text-align:center;">일시</td>
-          <td style="text-align:center;">실습내용</td>
-        </thead>
-        <tbody>
-          <tr><td>9/3</td><td>Linux 계정 만들기, cloud 설명 (아주 간단한 프로그램을 작성하고 compile)</td></tr>
-          <tr><td>9/10</td><td>Unix, Linux, C Shell (Compiler, Text Editor, IO redirection)</td></tr>
-          <tr class="bg-primary"><td>9/17~</td><td>TO BE ANNOUNCED</td></tr>
-      <style>
-        .schedule-lecture > tbody > tr > td:nth-child(1) {
-          text-align:center;
-        }
-      </style>
-    </div>
-  <% end %>
 </div>

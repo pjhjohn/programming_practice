@@ -1,21 +1,23 @@
-<div class="col-md-offset-2 col-md-8 well">
+<div class="col-md-offset-2 col-md-8 col-xs-12 well">
   <% unless post.user.nil? %>
-    <div class="col-md-6" style="padding:0px;text-align:left;font-weight:bold;"><%= post.user.realname %></div>
-    <div class="col-md-6" style="padding:0px;text-align:right;">작성일 : <%= post.created_at.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></div>
+    <div class="col-xs-5" style="padding:0px;text-align:left;font-weight:bold;"><%= post.user.realname %></div>
+    <div class="col-xs-7" style="padding:0px;text-align:right;">작성일 : <%= post.created_at.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></div>
   <% end %>
 </div>
-<div class="col-md-offset-2 col-md-8 well" style="margin-top:-20px;">
+<div class="col-md-offset-2 col-md-8 col-xs-12 well" style="margin-top:-20px;">
   <div class="col-md-12 post_font" style="padding:0px;"><%= post.body %></div>
   <% user = User.find_by_id(session[:user_id]) %>
   <% if !user.nil? and (user.is_admin or user.id==post.user_id) %>
-    <a href="/board/edit/<%= post.id %>?page_id=<%= params[:page_id] %>" class="pull-right btn btn-warning" style="margin-top:19px;">Edit</a>
-    <a href="/board/remove/<%= post.id %>?page_id=<%= params[:page_id] %>" class="pull-right btn btn-danger" style="margin-top:19px;margin-right:19px;">Remove</a>
-    <div style="clear:both"></div>
+    <div class="pull-right">
+      <a href="/board/edit/<%= post.id %>?page_id=<%= params[:page_id] %>" class="btn btn-warning" style="margin-top:19px;">Edit</a>
+      <a href="/board/remove/<%= post.id %>?page_id=<%= params[:page_id] %>" class="btn btn-danger" style="margin-top:19px;">Remove</a>
+      <div style="clear:both"></div>
+    </div>
   <% end %>
   <div style="clear:both;"></div>
 </div>
 <% unless session[:user_id].nil? %>
-  <form action="/reply/create/<%= post.id %>" class="col-md-offset-2 col-md-8 well" style="padding:0px;margin-top:-20px;" method="POST">
+  <form action="/reply/create/<%= post.id %>" class="col-md-offset-2 col-md-8 col-xs-12 well" style="padding:0px;margin-top:-20px;" method="POST">
     <div class="form-group col-xs-10" style="padding:0px;margin:0px;border:none;height:32px;">
       <input type="text" name="body" class="form-control" style="border-radius:0px;border:none;" placeholder="댓글">
     </div>
