@@ -5,7 +5,9 @@
   <% end %>
 </div>
 <div class="col-md-offset-2 col-md-8 col-xs-12 well" style="margin-top:-20px;">
-  <div class="col-md-12 post_font" style="padding:0px;"><%= post.body %></div>
+  <div class="col-md-12 post_font" style="padding:0px;">
+    <span style="word-break:break-all;"><%= post.body %></span>
+  </div>
   <% user = User.find_by_id(session[:user_id]) %>
   <% if !user.nil? and (user.is_admin or user.id==post.user_id) %>
     <div class="pull-right">
