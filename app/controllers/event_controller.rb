@@ -1,4 +1,6 @@
 class EventController < ApplicationController
+  @@markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, tables: true, fenced_code_blocks: true)
+  
   before_filter :admin_required
   before_filter -> {
     set_navbar_category "admin"
@@ -35,6 +37,7 @@ class EventController < ApplicationController
       title: params[:title],
       body:  params[:body],
       klass: params[:klass],
+      rendered: @@markdown.render(params[:body]),
       start: DateTime.strptime(params[:start], '%s'),
       finish: DateTime.strptime(params[:finish], '%s'),
       attachment_title: params[:attachment_title],
@@ -53,6 +56,7 @@ class EventController < ApplicationController
         event2update.title = params[:title] if params[:title].present?
         event2update.body  = params[:body]  if params[:body].present?
         event2update.klass = params[:klass] if params[:klass].present?
+        event2update.rendered = @@markdown.render(params[:body]) if params[:body].present?
         event2update.start = DateTime.strptime(params[:start], '%s') if params[:start].present?
         event2update.finish = DateTime.strptime(params[:finish], '%s') if params[:finish].present?
         event2update.attachment_title = params[:attachment_title] if params[:attachment_title].present?

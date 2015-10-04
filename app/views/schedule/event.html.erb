@@ -6,9 +6,14 @@
         <h5 style="text-align:right;margin:0">등록일 : <%= @event.created_at.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></h5>
         <center><h3 class="col-md-12" style="font-weight:bold;text-align:center"><%= @event.title %></h3></center>
         <center><h5 class="col-md-12" style="font-weight:bold;text-align:center"><%= @event.start.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') + "~" + @event.finish.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></h5></center>
-        <% unless @event.body.nil? %>
-          <div class="col-md-12 post_font schedule_body"><%= @event.body %></div>
+        <% if @event.rendered.nil? %>
+          <% unless @event.body.nil? %>
+            <div class="col-md-12 post_font schedule_body"><%= @event.body %></div>
+          <% end %>
+        <% else %>
+          <div class="col-md-12 schedule_body markdown-body"><%= @event.rendered.html_safe %></div>
         <% end %>
+        
         <% unless @event.attachment_title.nil? or @event.attachment_url.nil? %>
           <a href="<%= @event.attachment_url %>" class="btn btn-primary pull-left" style="margin-top:19px;" download=<%= @event.attachment_url.gsub(/.+\//,'') %>><%= @event.attachment_title %></a>
         <% else %>
