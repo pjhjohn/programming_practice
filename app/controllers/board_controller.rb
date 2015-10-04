@@ -1,4 +1,6 @@
 class BoardController < ApplicationController
+  @@markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, tables: true, fenced_code_blocks: true)
+  
   before_filter :signin_required, except: [:index, :read]
   before_action -> {
     set_navbar_category "board"
@@ -42,6 +44,7 @@ class BoardController < ApplicationController
     post2create.user_id = session[:user_id]
     post2create.title = params[:title]
     post2create.body = params[:body]
+    post2create.rendered = @@markdown.render(params[:body])
     post2create.is_announcement = User.find_by_id(session[:user_id]).is_admin unless User.find_by_id(session[:user_id]).nil?
     post2create.save
     redirect_to "/board/read/0/#{post2create.id}"
@@ -60,6 +63,7 @@ class BoardController < ApplicationController
       if is_owner_of post2update or user_admin?
         post2update.title = params[:title]
         post2update.body = params[:body]
+        post2update.rendered = @@markdown.render(params[:body])
         post2update.save
         redirect_to "/board/read/#{params[:page_id]}/#{params[:id]}", notice: "글을 수정하였습니다"  
       else
