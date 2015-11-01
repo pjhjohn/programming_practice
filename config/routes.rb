@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   # Board
   match "board/read(/:page_id(/:post_id))", :to => "board#read", :via => [:get, :post], :constraints => { :page_id => /\d+/, :post_id => /\d+/ }
-  
+
+  # Questions
+  match "questions/read(/:page_id(/:post_id))", :to => "questions#read", :via => [:get, :post], :constraints => { :page_id => /\d+/, :post_id => /\d+/ }
+
   # Admin
   match "admin", :to => "admin#index", :via => [:get]
   match "admin/members(/:page_id(/:user_id))", :to => "admin#members", :via => [:get, :post], :constraints => { :page_id => /\d+/, :user_id => /\d+/ }

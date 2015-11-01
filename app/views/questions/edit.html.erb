@@ -1,0 +1,18 @@
+<form class="col-md-offset-2 col-md-8 well form-horizontal" action="/questions/update/<%= @post2edit.id %>" method="POST" style="padding-bottom:5px;">
+  <div class="form-group">
+    <label class="col-md-2" for="title">Title</label>
+    <div class="col-md-12">
+      <input type="text" class="col-md-12 form-control" name="title" placeholder="제목" value="<%= @post2edit.title %>" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-2" for="body">Body</label>
+    <div class="col-md-12">
+      <textarea id="body" class="form-control post_font" name="body" row="10" placeholder="내용" style="min-height:400px;" required><%= @post2edit.body %></textarea>
+    </div>
+  </div>
+  <input type="hidden" name="page_id" value="<%= params[:page_id] %>" required>
+  <div class="form-group col-md-12">
+    <button type="submit" class="btn btn-info" style="width:100%">Edit</button>
+  </div>
+</form>

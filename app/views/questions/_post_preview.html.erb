@@ -1,0 +1,16 @@
+<% if !params[:post_id].nil? and params[:post_id]==post.id.to_s %>
+<div class="row bbs-row info" style="padding:10px 0px" page-id="<%=params[:page_id]%>" post-id="<%=post.id%>">
+<% else %>
+<div class="row bbs-row<%=' bg-primary' if post.is_announcement %>" style="padding:10px 0px" page-id="<%=params[:page_id]%>" post-id="<%=post.id%>">
+<% end %>
+  <div class="col-md-1 col-xs-2 bbs-content"><%= post.is_announcement ? "공지" : post.id %></div>
+  <div class="col-md-2 col-xs-4 bbs-content"><%= post.user.realname %></div>
+  <div class="col-md-2 col-md-push-7 col-xs-6 bbs-content bbs-date"><%= time_ago_in_words(post.created_at) %> ago</div>
+  <div class="col-md-7 col-md-pull-2 col-xs-12 bbs-content bbs-subject">
+  <% if params[:page_id].nil? %>
+    <%= truncate post.title, length:40 %>
+  <% else %>
+    <a href="/questions/read<%= "/#{params[:page_id]}" %><%= "/#{post.id}" %>"><%= truncate post.title, length:40 %></a>
+  <% end %>
+  </div>
+</div>

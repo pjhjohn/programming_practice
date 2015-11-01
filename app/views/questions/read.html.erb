@@ -1,0 +1,85 @@
+<div class="row">
+  <%= render :partial => "layouts/flash", :locals => {:offset => 2, :size => 8} %>
+  <% unless @post.nil? %>
+    <%= render partial: "questions/post", :locals => {:post => @post } %>
+  <% end %>
+  <div class="col-md-offset-2 col-md-8 col-xs-12 well">
+    <div class="col-md-12 hidden-sm hidden-xs" style="border-bottom:2px solid rgb(221,221,221);">
+      <div class="row bbs-header-row">
+        <div class="col-md-1">번호</div>
+        <div class="col-md-2">작성자</div>
+        <div class="col-md-7">제목</div>
+        <div class="col-md-2">시간</div>
+      </div>
+    </div>
+    <div class="col-md-12" style="margin-bottom:10px;">
+      <% @announcements.each do |post| %>
+        <%= render partial: "questions/post_preview", :locals => { :post => post } %>
+      <% end %>
+      <% @page.each do |post| %>
+        <%= render partial: "questions/post_preview", :locals => { :post => post } %>
+      <% end %>
+    </div>
+    <% (@end_page-@start_page+1).times do |i| %>
+      <a href="/questions/read/<%=@start_page + i%>" class="btn btn-primary pull-left <%='disabled' if ((@start_page+i) == @pagenum)%>" style="border-radius:0;margin-left:3px;"><%=@start_page + i%></a>
+    <% end %>
+    <a href="/questions/new" class="btn btn-info pull-right" style="border-radius:0">Write</a>
+    <div style="clear:both;"></div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $(".bbs-row").bind( "click", function(){
+      location.href = "/questions/read/" + $(this).attr("page-id") + "/" + $(this).attr("post-id");
+    });
+  });
+</script>
+<style>
+  .bbs-header-row > div{
+    text-align:center;
+    padding:5px 0px;
+    font-weight:bold;
+    font-size:15px;
+  }
+  .bbs-row {
+    border-bottom:1px solid rgb(221,221,221);
+  }
+  div.bbs-row:hover {
+    background-color:#eee;
+  }
+  div.bbs-row.bg-primary:hover {
+    background-color:rgb(71,142,203);
+  }
+  div.bbs-row.info:hover {
+    background-color:#999;
+  }
+  .bbs-content {
+    text-align:center;
+    padding:0px;
+  }
+  .bbs-content.bbs-subject {
+    padding:0px 10px;
+    text-align:left;
+  }
+  @media (max-width:992px) {
+    .bbs-content {
+      text-align:left;
+      padding-left:10px;
+    }
+    .bbs-content.bbs-date {
+      text-align:right;
+      padding-right:10px;
+    }
+    .bbs-content.bbs-subject {
+      padding-top:5px;
+      text-align:left;
+      font-size:15px;
+    }
+    .bbs-row {
+      border-bottom:2px solid #aaa;
+      border-right:2px solid #aaa;
+      border-radius:4px;
+      margin-bottom:3px;
+    }
+  }
+</style>

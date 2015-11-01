@@ -16,7 +16,9 @@
       <ul class="nav navbar-nav">
         <li<%= " class=active" if session[:navbar_category]=="home" %>><a href="/">Home</a></li>
         <li<%= " class=active" if session[:navbar_category]=="schedule" %>><a href="/schedule">Schedule</a></li>
-        <li<%= " class=active" if session[:navbar_category]=="board" %>><a href="/board">Board</a></li>
+        <li<%= " class=active" if session[:navbar_category]=="board" %>><a href="/board">Announcements</a></li>
+        <li<%= " class=active" if session[:navbar_category]=="questions" %>><a href="/questions">Questions</a></li>
+
         <% unless user.nil? %>
           <% if user.is_admin %>
             <li<%= " class=active" if session[:navbar_category]=="admin" %>><a href="/admin">Admin</a></li>

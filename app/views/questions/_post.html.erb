@@ -1,0 +1,43 @@
+<div class="col-md-offset-2 col-md-8 col-xs-12 well">
+  <% unless post.user.nil? %>
+    <div class="col-xs-5" style="padding:0px;text-align:left;font-weight:bold;"><%= post.user.realname %></div>
+    <div class="col-xs-7" style="padding:0px;text-align:right;">작성일 : <%= post.created_at.in_time_zone('Asia/Seoul').strftime("%F %H:%M").gsub(/\-/,'.') %></div>
+  <% end %>
+</div>
+<div class="col-md-offset-2 col-md-8 col-xs-12 well" style="margin-top:-20px;">
+  <div class="col-md-12 <% if post.rendered.nil? %> post_font <% end %>" style="padding:0px;">
+    <span style="word-break:break-all;" class="markdown-body">
+      <% if post.rendered.nil? %>
+        <%= post.body %>
+      <% else %>
+        <%= post.rendered.html_safe %>
+      <% end %>
+    </span>
+  </div>
+  <% user = User.find_by_id(session[:user_id]) %>
+  <% if !user.nil? and (user.is_admin or user.id==post.user_id) %>
+    <div class="pull-right">
+      <a href="/questions/edit/<%= post.id %>?page_id=<%= params[:page_id] %>" class="btn btn-warning" style="margin-top:19px;">Edit</a>
+      <a href="/questions/remove/<%= post.id %>?page_id=<%= params[:page_id] %>" class="btn btn-danger" style="margin-top:19px;">Remove</a>
+      <div style="clear:both"></div>
+    </div>
+  <% end %>
+  <div style="clear:both;"></div>
+</div>
+<% unless session[:user_id].nil? %>
+  <form action="/reply_questions/create/<%= post.id %>" class="col-md-offset-2 col-md-8 col-xs-12 well" style="padding:0px;margin-top:-20px;" method="POST">
+    <div class="form-group col-xs-10" style="padding:0px;margin:0px;border:none;height:32px;">
+      <input type="text" name="body" class="form-control" style="border-radius:0px;border:none;" placeholder="댓글">
+    </div>
+    <button type="submit" class="btn btn-primary col-xs-2" style="border:none;">등록</button>
+    <div style="clear:both;"></div>
+  </form>
+  <% unless post.reply_questions.empty? %>
+    <div class="col-md-offset-2 col-md-8 well" style="padding:15px;margin-top:-20px;">
+      <% post.reply_questions.each do |reply| %>
+        <%= render partial: "questions/reply", :locals => {:reply => reply} %>
+      <% end %>
+      <div style="clear:both;"></div>
+    </div>
+  <% end %>
+<% end %>
