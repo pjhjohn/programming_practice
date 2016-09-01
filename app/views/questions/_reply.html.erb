@@ -3,7 +3,7 @@
   <span style="word-break:break-all;">
     <%= reply.body %>
     <% if !reply.user.nil? and reply.user.id == session[:user_id] or reply.user.is_admin? %>
-      <a href="/reply_questions/delete/<%=reply.id%>"><span class="glyphicon glyphicon-remove" style="position:absolute;right:0px;"></span></a>
+      <a href="/pp2015/reply_questions/delete/<%=reply.id%>"><span class="glyphicon glyphicon-remove" style="position:absolute;right:0px;"></span></a>
     <% end %>
   </span>
 </div>

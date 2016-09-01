@@ -36,7 +36,7 @@
     <div class="col-md-12 well main-sidebar">
       <div class="col-md-12 shadow" style="padding:0px;">
         <center>
-          <a href="/board" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Recent Announcements</h4></a>
+          <a href="/pp2015/board" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Recent Announcements</h4></a>
         </center>
       </div>
       <table class="table" style="margin-bottom:0px">
@@ -54,7 +54,7 @@
     <div class="col-md-12 well main-sidebar" style="padding-bottom:0px;">
       <div class="col-md-12 shadow" style="padding:0px;">
         <center>
-          <a href="/schedule" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Upcoming Schedules</h4></a>
+          <a href="/pp2015/schedule" style="text-decoration:none;"><h4 style="color:rgb(70,70,70);">Upcoming Schedules</h4></a>
         </center>
       </div>
       <table class="table" style="margin-bottom:0px">
@@ -127,10 +127,10 @@
         }
         $(document).ready(function(){
           $.when(
-            $.getScript( "/calendar/components/underscore/underscore-min.js" ),
-            $.getScript( "/calendar/components/bootstrap3/js/bootstrap.min.js" ),
-            $.getScript( "/calendar/js/calendar.js" ),
-            $.getScript( "/calendar/js/language/ko-KR.js" ),
+            $.getScript( "/pp2015/calendar/components/underscore/underscore-min.js" ),
+            $.getScript( "/pp2015/calendar/components/bootstrap3/js/bootstrap.min.js" ),
+            $.getScript( "/pp2015/calendar/js/calendar.js" ),
+            $.getScript( "/pp2015/calendar/js/language/ko-KR.js" ),
             $.Deferred(function( deferred ){
                 $( deferred.resolve );
             })
@@ -145,9 +145,9 @@
             }
             var options = {
               view: "month",
-              tmpl_path: "/calendar/tmpls/",
+              tmpl_path: "/pp2015/calendar/tmpls/",
               // language: "ko-KR",
-              events_source: "/schedule/get_events",
+              events_source: "/pp2015/schedule/get_events",
               onAfterEventsLoad: function(events) {
                 if(!events) return;
                 var list = $('#event-list');
@@ -164,7 +164,7 @@
                   newElem.css("background-color", class_color[val.class] || "#dddddd");
                   $("<td></td>").css("text-align","center").html(getDateInterval(val.start, val.end)).appendTo(newElem);
                   $("<td></td>").css("text-align","left")
-                    .html( $("<a></a>").attr("href", "/schedule/event/" + val.id).html(val.title) )
+                    .html( $("<a></a>").attr("href", "/pp2015/schedule/event/" + val.id).html(val.title) )
                     .appendTo(newElem);
                   newElem.appendTo(list);
                 });

@@ -1,6 +1,6 @@
 <div class="row">
   <%= render :partial => "layouts/flash", :locals => {:offset => 2, :size => 8} %>
-  <form class="col-md-offset-2 col-md-8 well form-horizontal" action="/admin/event/update/<%= @event.id %>" method="POST">
+  <form class="col-md-offset-2 col-md-8 well form-horizontal" action="/pp2015/admin/event/update/<%= @event.id %>" method="POST">
     <%# Title %>
     <div class="form-group">
       <label class="col-md-2" for="title">Title</label>
@@ -34,7 +34,7 @@
       </div>
     </div>
     <%# Start & Finish %>
-    <link rel="stylesheet" type="text/css" href="/datetimepicker/jquery.datetimepicker.css"/ >    
+    <link rel="stylesheet" type="text/css" href="/pp2015/datetimepicker/jquery.datetimepicker.css" />
     <div class="form-group">
       <label class="col-md-2" for="start">Starts at</label>
       <div class="col-md-10">
@@ -77,7 +77,7 @@
   var time;
   $(document).ready(function(){
     $.when(
-      $.getScript( "/datetimepicker/jquery.datetimepicker.js" ),
+      $.getScript( "/pp2015/datetimepicker/jquery.datetimepicker.js" ),
       $.Deferred(function( deferred ){
         $( deferred.resolve );
       })

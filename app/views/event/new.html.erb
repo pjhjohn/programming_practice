@@ -1,6 +1,6 @@
 <div class="row">
   <%= render :partial => "layouts/flash", :locals => {:offset => 2, :size => 8} %>
-  <form class="col-md-offset-2 col-md-8 well form-horizontal" action="/admin/event/create" method="POST">
+  <form class="col-md-offset-2 col-md-8 well form-horizontal" action="/pp2015/admin/event/create" method="POST">
     <%# Title %>
     <div class="form-group">
       <label class="col-md-2" for="title">Title</label>
@@ -22,7 +22,7 @@
       <div class="col-md-10">
         <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-radius:2px;width:100%;" aria-haspopup="true" aria-expanded="false">
           <span id="event-class">Select Event Class</span>&nbsp;&nbsp;<span class="caret"></span>
-        </button>  
+        </button>
         <ul class="dropdown-menu" style="left:200px; min-width:200px">
           <li><a href="#">IMPORTANT</a></li>
           <li><a href="#">SUCCESS</a></li>
@@ -33,8 +33,8 @@
         </ul>
       </div>
     </div>
-    
-    <link rel="stylesheet" type="text/css" href="/datetimepicker/jquery.datetimepicker.css"/ >    
+
+    <link rel="stylesheet" type="text/css" href="/pp2015/datetimepicker/jquery.datetimepicker.css" />
     <%# Start %>
     <div class="form-group">
       <label class="col-md-2" for="start">Starts at</label>
@@ -80,7 +80,7 @@
   var time;
   $(document).ready(function(){
     $.when(
-      $.getScript( "/datetimepicker/jquery.datetimepicker.js" ),
+      $.getScript( "/pp2015/datetimepicker/jquery.datetimepicker.js" ),
       $.Deferred(function( deferred ){
         $( deferred.resolve );
       })

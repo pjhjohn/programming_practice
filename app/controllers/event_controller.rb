@@ -1,17 +1,17 @@
 class EventController < ApplicationController
   @@markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, tables: true, fenced_code_blocks: true)
-  
+
   before_filter :admin_required
   before_filter -> {
     set_navbar_category "admin"
   }
   def index
-    redirect_to "/admin"
+    redirect_to "/pp2015/admin"
   end
-  
+
   def new
   end
-  
+
   def edit
     if params[:id].nil?
       redirect_to :back
@@ -46,7 +46,7 @@ class EventController < ApplicationController
     event.save
     event.url = "#{event.url}/#{event.id}"
     event.save
-    redirect_to "/schedule/event/#{event.id}", notice: "Successfully registered new event"
+    redirect_to "/pp2015/schedule/event/#{event.id}", notice: "Successfully registered new event"
   end
 
   def update
@@ -62,12 +62,12 @@ class EventController < ApplicationController
         event2update.attachment_title = params[:attachment_title] if params[:attachment_title].present?
         event2update.attachment_url   = params[:attachment_url  ] if params[:attachment_url  ].present?
         event2update.save
-        redirect_to "/schedule/event/#{params[:id]}", notice: "Successfully updated"
+        redirect_to "/pp2015/schedule/event/#{params[:id]}", notice: "Successfully updated"
       else
-        redirect_to "/schedule", alert: "No such event exists"
+        redirect_to "/pp2015/schedule", alert: "No such event exists"
       end
     else
-      redirect_to "/schedule", alert: "Failed to update event : No such ID exists"
+      redirect_to "/pp2015/schedule", alert: "Failed to update event : No such ID exists"
     end
   end
 
@@ -76,12 +76,12 @@ class EventController < ApplicationController
       event2delete = Event.find_by_id(params[:id])
       unless event2delete.nil?
         event2delete.destroy
-        redirect_to "/schedule", notice: "Successfully deleted"
+        redirect_to "/pp2015/schedule", notice: "Successfully deleted"
       else
-        redirect_to "/schedule", alert: "No such event exists"
+        redirect_to "/pp2015/schedule", alert: "No such event exists"
       end
     else
-      redirect_to "/schedule", alert: "Failed to update event : No such ID exists"
+      redirect_to "/pp2015/schedule", alert: "Failed to update event : No such ID exists"
     end
   end
 end

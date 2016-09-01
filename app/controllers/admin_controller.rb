@@ -27,17 +27,17 @@ class AdminController < ApplicationController
       flash[:alert] = "FAILED TO CREATE USER : USERNAME ALREADY EXISTS"
     end
     flash[:create_user] = true
-    redirect_to "/admin/user_create"
+    redirect_to "/pp2015/admin/user_create"
   end
 
   def user_modify
     if params[:id].nil?
-      redirect_to "/"
+      redirect_to "/pp2015/"
     else
       unless User.find_by_id(params[:id]).nil?
         @user = User.find_by_id(params[:id])
       else
-        redirect_to "/"
+        redirect_to "/pp2015/"
       end
     end
   end
@@ -53,9 +53,9 @@ class AdminController < ApplicationController
         user.save
       end
       pagenum = ( User.all.count - user.id ) / 20 + 1
-      redirect_to "/admin/members/" + pagenum.to_s
+      redirect_to "/pp2015/admin/members/" + pagenum.to_s
     else
-      redirect_to "/"
+      redirect_to "/pp2015/"
     end
   end
 

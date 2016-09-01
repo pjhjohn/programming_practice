@@ -4,11 +4,11 @@ class ScheduleController < ApplicationController
   }
   def index
     params[:id] = nil
-    
+
     @events = Event.all.order(start: :asc)
     current_event = nil
     today = Date.current.strftime("%F").gsub('-', '').to_i
-    
+
     @events.each do |e|
       date = e.start.strftime("%F").split(' ').first.gsub('-', '').to_i
       if date >= today - 1
@@ -16,12 +16,12 @@ class ScheduleController < ApplicationController
         break
       end
     end
-    
+
     event
     if current_event.nil?
       render :template => "schedule/event"
     else
-      redirect_to "/schedule/event/#{current_event.id}"
+      redirect_to "/pp2015/schedule/event/#{current_event.id}"
     end
   end
 

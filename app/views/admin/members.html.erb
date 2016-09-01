@@ -21,9 +21,9 @@
       </tbody>
     </table>
     <% (@end_page-@start_page+1).times do |i| %>
-      <a href="/admin/members/<%=@start_page + i%>" class="btn btn-primary pull-left <%='disabled' if ((@start_page+i) == @pagenum)%>" style="border-radius:0;margin-left:3px;"><%=@start_page + i%></a>
+      <a href="/pp2015/admin/members/<%=@start_page + i%>" class="btn btn-primary pull-left <%='disabled' if ((@start_page+i) == @pagenum)%>" style="border-radius:0;margin-left:3px;"><%=@start_page + i%></a>
     <% end %>
-      <a href="/admin/user_create" class="btn btn-info pull-right" style="border-radius:0;margin-left:3px;">Create</a>
+      <a href="/pp2015/admin/user_create" class="btn btn-info pull-right" style="border-radius:0;margin-left:3px;">Create</a>
       <div style="clear:both;"></div>
   </div>
 </div>
@@ -32,7 +32,7 @@
   $(document).ready(function(){
     $(".user_delete_btn").bind( "click", function(event){
       if( confirm("Really?") ){
-        $.post("/admin/delete_user", { id : $(this).attr("user-id") }, function(data){
+        $.post("/pp2015/admin/delete_user", { id : $(this).attr("user-id") }, function(data){
           if( data == "success")
           {
             location.reload();
@@ -45,12 +45,12 @@
       }
     });
     $(".user_modify_btn").bind( "click", function(event){
-      location.href = "/admin/user_modify/" + $(this).attr("user-id");
+      location.href = "/pp2015/admin/user_modify/" + $(this).attr("user-id");
     });
-    
+
     $(".admin_user").bind( "click", function(event){
       if( confirm("Really?") ){
-        $.post("/admin/user_make_normal", { id : $(this).attr("user-id") }, function(data){
+        $.post("/pp2015/admin/user_make_normal", { id : $(this).attr("user-id") }, function(data){
           if( data == "success")
           {
             location.reload();
@@ -64,7 +64,7 @@
     });
     $(".normal_user").bind( "click", function(event){
       if( confirm("Really?") ){
-        $.post("/admin/user_make_admin", { id : $(this).attr("user-id") }, function(data){
+        $.post("/pp2015/admin/user_make_admin", { id : $(this).attr("user-id") }, function(data){
           if( data == "success")
           {
             location.reload();

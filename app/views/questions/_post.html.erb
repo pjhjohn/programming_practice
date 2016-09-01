@@ -17,15 +17,15 @@
   <% user = User.find_by_id(session[:user_id]) %>
   <% if !user.nil? and (user.is_admin or user.id==post.user_id) %>
     <div class="pull-right">
-      <a href="/questions/edit/<%= post.id %>?page_id=<%= params[:page_id] %>" class="btn btn-warning" style="margin-top:19px;">Edit</a>
-      <a href="/questions/remove/<%= post.id %>?page_id=<%= params[:page_id] %>" class="btn btn-danger" style="margin-top:19px;">Remove</a>
+      <a href="/pp2015/questions/edit/<%= post.id %>?page_id=<%= params[:page_id] %>" class="btn btn-warning" style="margin-top:19px;">Edit</a>
+      <a href="/pp2015/questions/remove/<%= post.id %>?page_id=<%= params[:page_id] %>" class="btn btn-danger" style="margin-top:19px;">Remove</a>
       <div style="clear:both"></div>
     </div>
   <% end %>
   <div style="clear:both;"></div>
 </div>
 <% unless session[:user_id].nil? %>
-  <form action="/reply_questions/create/<%= post.id %>" class="col-md-offset-2 col-md-8 col-xs-12 well" style="padding:0px;margin-top:-20px;" method="POST">
+  <form action="/pp2015/reply_questions/create/<%= post.id %>" class="col-md-offset-2 col-md-8 col-xs-12 well" style="padding:0px;margin-top:-20px;" method="POST">
     <div class="form-group col-xs-10" style="padding:0px;margin:0px;border:none;height:32px;">
       <input type="text" name="body" class="form-control" style="border-radius:0px;border:none;" placeholder="댓글">
     </div>

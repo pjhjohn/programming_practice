@@ -21,16 +21,16 @@
       <% end %>
     </div>
     <% (@end_page-@start_page+1).times do |i| %>
-      <a href="/board/read/<%=@start_page + i%>" class="btn btn-primary pull-left <%='disabled' if ((@start_page+i) == @pagenum)%>" style="border-radius:0;margin-left:3px;"><%=@start_page + i%></a>
+      <a href="/pp2015/board/read/<%=@start_page + i%>" class="btn btn-primary pull-left <%='disabled' if ((@start_page+i) == @pagenum)%>" style="border-radius:0;margin-left:3px;"><%=@start_page + i%></a>
     <% end %>
-    <a href="/board/new" class="btn btn-info pull-right" style="border-radius:0">Write</a>
+    <a href="/pp2015/board/new" class="btn btn-info pull-right" style="border-radius:0">Write</a>
     <div style="clear:both;"></div>
   </div>
 </div>
 <script>
   $(document).ready(function(){
     $(".bbs-row").bind( "click", function(){
-      location.href = "/board/read/" + $(this).attr("page-id") + "/" + $(this).attr("post-id");
+      location.href = "/pp2015/board/read/" + $(this).attr("page-id") + "/" + $(this).attr("post-id");
     });
   });
 </script>

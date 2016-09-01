@@ -10,7 +10,7 @@
   <% if params[:page_id].nil? %>
     <%= truncate post.title, length:40 %>
   <% else %>
-    <a href="/questions/read<%= "/#{params[:page_id]}" %><%= "/#{post.id}" %>"><%= truncate post.title, length:40 %></a>
+    <a href="/pp2015/questions/read<%= "/#{params[:page_id]}" %><%= "/#{post.id}" %>"><%= truncate post.title, length:40 %></a>
   <% end %>
   </div>
 </div>

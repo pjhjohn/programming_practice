@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     digest = sha256.base64digest message
     return digest
   end
-  
+
   def admin_required
     if user_active?
       if User.find_by_id(session[:user_id]).is_admin
@@ -16,42 +16,42 @@ class ApplicationController < ActionController::Base
       else
         flash[:message_navbar] = "Admin is required"
         flash[:success_navbar] = false
-        redirect_to "/"
+        redirect_to "/pp2015/"
       end
     else
       signin_required
     end
   end
-  
+
   def signin_required
     unless user_active?
       flash[:message_navbar] = "Sign-in is required"
       flash[:success_navbar] = false
-      redirect_to "/" # flashing message that sign-in is required
+      redirect_to "/pp2015/" # flashing message that sign-in is required
     end
   end
-  
+
   def signout_required
     if user_active?
       flash[:message_navbar] = "Sign-out is required"
       flash[:success_navbar] = false
-      redirect_to "/" # flashing message that sign-in is required
+      redirect_to "/pp2015/" # flashing message that sign-in is required
     end
   end
-  
+
   def user_active?
     !session[:user_id].nil? and !User.find_by_id(session[:user_id]).nil?
   end
-  
+
   def set_navbar_category(category = "")
     session[:navbar_category] = category
   end
-  
+
   def redirect_back
     begin
       redirect_to :back
     rescue ActionController::RedirectBackError
-      redirect_to "/" # root_path
+      redirect_to "/pp2015/" # root_path
     end
   end
 
@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     @start_page = 1 > @start_page ? 1 : @start_page
     @pagenum = pagenum
   end
-  
+
   def user_admin?
     user = User.find_by_id(session[:user_id])
     !user.nil? and user.is_admin

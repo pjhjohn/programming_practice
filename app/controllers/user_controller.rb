@@ -6,14 +6,14 @@ class UserController < ApplicationController
   def index
     redirect_back
   end
-  
+
   # session[:user_id] & params[:id] MUST EXIST
   def info
     if params[:id].nil?
-      redirect_to "/"
+      redirect_to "/pp2015/"
     end
   end
-  
+
   def change_username
     if user_active?
       user = User.find_by_id(session[:user_id])
@@ -29,12 +29,12 @@ class UserController < ApplicationController
         flash[:alert] = "FAILED TO CHANGE USERNAME"
       end
       flash[:change_username] = true
-      redirect_to "/user/info/#{session[:user_id]}"
+      redirect_to "/pp2015/user/info/#{session[:user_id]}"
     else
-      redirect_to "/"
+      redirect_to "/pp2015/"
     end
   end
-  
+
   def change_password
     if user_active?
       user = User.find_by_id(session[:user_id])
@@ -46,9 +46,9 @@ class UserController < ApplicationController
         flash[:alert] = "FAILED TO CHANGE PASSWORD"
       end
       flash[:change_password] = true
-      redirect_to "/user/info/#{session[:user_id]}"
+      redirect_to "/pp2015/user/info/#{session[:user_id]}"
     else
-      redirect_to "/"
+      redirect_to "/pp2015/"
     end
   end
 end
