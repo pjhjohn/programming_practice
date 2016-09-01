@@ -7,9 +7,21 @@
  */
 "use strict";
 
-Date.prototype.getWeek = function() {
-	var onejan = new Date(this.getFullYear(), 0, 1);
-	return Math.ceil((((this.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7);
+Date.prototype.getWeek = function(iso8601) {
+	if (iso8601) {
+		var target = new Date(this.valueOf());
+		var dayNr  = (this.getDay() + 6) % 7;
+		target.setDate(target.getDate() - dayNr + 3);
+		var firstThursday = target.valueOf();
+		target.setMonth(0, 1);
+		if (target.getDay() != 4) {
+			target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+		}
+		return 1 + Math.ceil((firstThursday - target) / 604800000); // 604800000 = 7 * 24 * 3600 * 1000
+	} else {
+		var onejan = new Date(this.getFullYear(), 0, 1);
+		return Math.ceil((((this.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7);
+	}
 };
 Date.prototype.getMonthFormatted = function() {
 	var month = this.getMonth() + 1;
@@ -40,6 +52,8 @@ if(!String.prototype.formatNum) {
 (function($) {
 
 	var defaults = {
+		// Container to append the tooltip
+		tooltip_container : 'body',
 		// Width of the calendar
 		width: '100%',
 		// Initial view (can be 'month', 'week', 'day')
@@ -59,6 +73,9 @@ if(!String.prototype.formatNum) {
 		//   returns an array of events (as described in events property description)
 		// - An array containing the events
 		events_source: '',
+		// Static cache of events. If set to true, events will only be loaded once.
+		// Useful if response is not constrained by date.
+		events_cache: false,
 		// Set format12 to true if you want to use 12 Hour format instead of 24 Hour
 		format12: false,
 		am_suffix: "AM",
@@ -111,6 +128,9 @@ if(!String.prototype.formatNum) {
 		merge_holidays: false,
 		display_week_numbers: true,
 		weekbox: true,
+		//shows events which fits between time_start and time_end
+		show_events_which_fits_time: false,
+
 		// ------------------------------------------------------------
 		// CALLBACKS. Events triggered by calendar class. You can use
 		// those to affect you UI
@@ -146,6 +166,7 @@ if(!String.prototype.formatNum) {
 
 	var defaults_extended = {
 		first_day: 2,
+		week_numbers_iso_8601: false,
 		holidays: {
 			// January 1
 			'01-01': "New Year's Day",
@@ -487,7 +508,7 @@ if(!String.prototype.formatNum) {
 		var start = new Date(this.options.position.start.getTime());
 		start.setHours(time_start[0]);
 		start.setMinutes(time_start[1]);
-		var end = new Date(this.options.position.end.getTime());
+		var end = new Date(this.options.position.end.getTime()-(86400000));
 		end.setHours(time_end[0]);
 		end.setMinutes(time_end[1]);
 
@@ -512,19 +533,36 @@ if(!String.prototype.formatNum) {
 				e.end_hour = f.getDate() + ' ' + $self.locale['ms' + f.getMonth()] + ' ' + e.end_hour;
 			}
 
-			if(e.start < start.getTime() && e.end > end.getTime()) {
-				data.all_day.push(e);
-				return;
-			}
+			if(!$self.options.show_events_which_fits_time) {
+				if(e.start < start.getTime() && e.end > end.getTime()) {
+					data.all_day.push(e);
+					return;
+				}
 
-			if(e.end < start.getTime()) {
-				data.before_time.push(e);
-				return;
-			}
+				if(e.end < start.getTime()) {
+					data.before_time.push(e);
+					return;
+				}
 
-			if(e.start > end.getTime()) {
-				data.after_time.push(e);
-				return;
+				if(e.start > end.getTime()) {
+					data.after_time.push(e);
+					return;
+				}
+			} else {
+				if(e.start < start.getTime()) {
+					data.before_time.push(e);
+					return;
+				}
+
+				if(e.end > end.getTime()) {
+					data.after_time.push(e);
+					return;
+				}
+
+				if(e.start < start.getTime() && e.end < end.getTime()) {
+					data.all_day.push(e);
+					return;
+				}
 			}
 
 			var event_start = start.getTime() - e.start;
@@ -548,9 +586,6 @@ if(!String.prototype.formatNum) {
 
 			data.by_hour.push(e);
 		});
-
-		//var d = new Date('2013-03-14 13:20:00');
-		//warn(d.getTime());
 	};
 
 	Calendar.prototype._hour_min = function(hour) {
@@ -580,19 +615,24 @@ if(!String.prototype.formatNum) {
 		var first_day = getExtentedOption(this, 'first_day');
 
 		$.each(this.getEventsBetween(start, end), function(k, event) {
-			event.start_day = new Date(parseInt(event.start)).getDay();
+			var eventStart  = new Date(parseInt(event.start));
+			eventStart.setHours(0,0,0,0);
+			var eventEnd    = new Date(parseInt(event.end));
+			eventEnd.setHours(23,59,59,999);
+
+			event.start_day = new Date(parseInt(eventStart.getTime())).getDay();
 			if(first_day == 1) {
 				event.start_day = (event.start_day + 6) % 7;
 			}
-			if((event.end - event.start) <= 86400000) {
+			if((eventEnd.getTime() - eventStart.getTime()) <= 86400000) {
 				event.days = 1;
 			} else {
-				event.days = ((event.end - event.start) / 86400000);
+				event.days = ((eventEnd.getTime() - eventStart.getTime()) / 86400000);
 			}
 
-			if(event.start < start) {
+			if(eventStart.getTime() < start) {
 
-				event.days = event.days - ((start - event.start) / 86400000);
+				event.days = event.days - ((start - eventStart.getTime()) / 86400000);
 				event.start_day = 0;
 			}
 
@@ -851,13 +891,28 @@ if(!String.prototype.formatNum) {
 				return this.locale.title_month.format(this.locale['m' + p.getMonth()], p.getFullYear());
 				break;
 			case 'week':
-				return this.locale.title_week.format(p.getWeek(), p.getFullYear());
+				return this.locale.title_week.format(p.getWeek(getExtentedOption(this, 'week_numbers_iso_8601')), p.getFullYear());
 				break;
 			case 'day':
 				return this.locale.title_day.format(this.locale['d' + p.getDay()], p.getDate(), this.locale['m' + p.getMonth()], p.getFullYear());
 				break;
 		}
 		return;
+	};
+
+	Calendar.prototype.getYear = function() {
+		var p = this.options.position.start;
+		return p.getFullYear();
+	};
+
+	Calendar.prototype.getMonth = function() {
+		var p = this.options.position.start;
+		return this.locale['m' + p.getMonth()];
+	};
+
+	Calendar.prototype.getDay = function() {
+		var p = this.options.position.start;
+		return this.locale['d' + p.getDay()];
 	};
 
 	Calendar.prototype.isToday = function() {
@@ -900,9 +955,9 @@ if(!String.prototype.formatNum) {
 				if(source.length) {
 					loader = function() {
 						var events = [];
-                                                var d = new Date();
-                                                var utc_offset = d.getTimezoneOffset();
-                                                var params = {from: self.options.position.start.getTime(), to: self.options.position.end.getTime(), utc_offset: utc_offset};
+						var d_from = self.options.position.start;
+						var d_to = self.options.position.end;
+						var params = {from: d_from.getTime(), to: d_to.getTime(), utc_offset_from: d_from.getTimezoneOffset(), utc_offset_to: d_to.getTimezoneOffset()};
 
 						if(browser_timezone.length) {
 							params.browser_timezone = browser_timezone;
@@ -929,15 +984,17 @@ if(!String.prototype.formatNum) {
 			$.error(this.locale.error_loadurl);
 		}
 		this.options.onBeforeEventsLoad.call(this, function() {
-			self.options.events = loader();
-			self.options.events.sort(function(a, b) {
-				var delta;
-				delta = a.start - b.start;
-				if(delta == 0) {
-					delta = a.end - b.end;
-				}
-				return delta;
-			});
+			if (!self.options.events.length || !self.options.events_cache) {
+				self.options.events = loader();
+				self.options.events.sort(function (a, b) {
+					var delta;
+					delta = a.start - b.start;
+					if (delta == 0) {
+						delta = a.end - b.end;
+					}
+					return delta;
+				});
+			}
 			self.options.onAfterEventsLoad.call(self, self.options.events);
 		});
 	};
@@ -970,7 +1027,7 @@ if(!String.prototype.formatNum) {
 	Calendar.prototype._update = function() {
 		var self = this;
 
-		$('*[data-toggle="tooltip"]').tooltip({container: 'body'});
+		$('*[data-toggle="tooltip"]').tooltip({container: this.options.tooltip_container});
 
 		$('*[data-cal-date]').click(function() {
 			var view = $(this).data('cal-view');
@@ -1098,7 +1155,7 @@ if(!String.prototype.formatNum) {
 					var day = (child.hasClass('cal-month-first-row') ? 1 : $('[data-cal-date]', child).text());
 					p.setDate(parseInt(day));
 					day = (day < 10 ? '0' + day : day);
-					week.html(self.locale.week.format(self.options.display_week_numbers == true ? p.getWeek() : ''));
+					week.html(self.locale.week.format(self.options.display_week_numbers == true ? p.getWeek(getExtentedOption(self, 'week_numbers_iso_8601')) : ''));
 					week.attr('data-cal-week', start + day).show().appendTo(child);
 				})
 				.on('mouseleave', function() {
